@@ -1,0 +1,88 @@
+title DiagramaDeSecuencia: Generar Ranking de vinos
+actor ":Enofilo" as EN
+boundary ":PantallaGenerarRankingVinos" as PA
+control ":GestorGenerarRankingDeVinos" as GE
+entity ":Sommellier" as SO
+entity ":Vino" as VI
+entity ":Reseña" as RE
+entity ":Bodega" as BOD
+entity ":RegionVitivinícola" as REG
+entity ":Varietal" as VA
+entity ":Provincia" as PROV
+entity ":Pais" as PAIS
+boundary ":PantallaExcel" as EX
+
+entryspacing 0.5
+// paso 1
+EN -> PA : opcionGenerarRanking()
+PA->PA: habilitarPantalla()
+PA->GE: opcionGenerarRanking()
+// paso 2
+GE->PA: solicitarFechaDesdeHasta()
+// paso 3
+EN->PA: tomarSeleccionFechaDesde()
+EN->PA: tomarSeleccionFechaHasta()
+PA->GE: tomarFechaDesdeHasta()
+// paso 4
+PA->PA:validarFechaDesdeHasta()
+// paso 5
+GE->PA: solicitarTipoReseña()
+// paso 6
+EN->PA: tomarSeleccionTipoReseña()
+PA->GE: tomarTipoReseña()
+// paso 7
+GE->PA: solicitarTipoVisualizacion()
+// paso 8
+EN->PA: tomarSeleccionTipoVisualizacion()
+PA->GE: tomarTipoVisualizacion()
+// paso 9
+GE->PA: solicitarConfirmacion()
+// paso 10
+EN->PA: tomarConfirmacionDeReporte()
+PA->GE: tomarConfirmacionDeReporte()
+// paso 11
+GE->GE: buscarVinosEnPeriodo()
+
+group loop Recorre vinos  [Mientras haya vinos]
+
+GE->VI: buscarReseñasDeVinosEnPeriodo()
+
+group loop Buscar reseñas en periodo [Mientras haya reseñas]
+VI->RE: estasEnPeriodo()
+VI->RE: sosPremium()
+end
+GE->VI:getNombre()
+GE->VI:getPrecio()
+GE->VI:buscarDatosBodega()
+VI->BOD: getNombre()
+VI->BOD:buscarDatosRegion()
+BOD->REG: getNombre()
+BOD->REG:buscarPais()
+REG->PROV: conocerPais()
+PROV->PAIS:getNombre()
+GE->VI:buscarVarietal()
+VI->VA: getNombre()
+end
+
+// paso 12
+GE->GE: calcularPromedioDeCalificacionDeVinos()
+
+group loop Sumar calificaciones de reseñas de vinos [mientras haya vinos que cumpllen con los filtros]
+GE->VI: clacularPuntaje()
+group loop Buscar reseñas [Mientras haya reseñas]
+VI->RE:estasEnPeriodo()
+VI->RE:sosDeSommelier()
+VI->RE:getPuntaje()
+end 
+VI->VI: calcularPromedio()
+end
+
+// paso 13
+GE->GE: ordenarVinosPorCalificacion()
+
+// paso 14
+GE->EX: opcionGenerarReporte()
+EX->EX: habilitarPantalla()
+GE->GE: generarReporte()
+GE->PA: informarGeneracionReporte()
+GE->GE: finCU()

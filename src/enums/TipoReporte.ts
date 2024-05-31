@@ -1,0 +1,3 @@
+enum TipoReporte{
+    default = "default"
+}
