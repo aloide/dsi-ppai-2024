@@ -5,13 +5,15 @@ import { Varietal } from "./varietal"
 
 export class Vino {
 
+    private id: number = 0
     private nombre: string = ""
     private precio: number = 0
     private resenas: Resena[] = []
     private varietal : Varietal = new Varietal()
     private bodega : Bodega = new Bodega("")
 
-    constructor(unNombre: string, unPrecio: number) {
+    constructor(unId: number, unNombre: string, unPrecio: number) {
+        this.id = unId
         this.nombre = unNombre
         this.precio = unPrecio
         this.resenas = getResenas()

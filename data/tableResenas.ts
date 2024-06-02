@@ -3,10 +3,10 @@ import { Resena } from "../src/models/resena";
 export function getResenas(): Resena[] {
 
     return [
-        new Resena(true, new Date("31-05-2023"), 4),
-        new Resena(true, new Date("30-05-2022"), 2),
-        new Resena(false, new Date("30-06-2003"), 3),
-        new Resena(false, new Date("07-06-2023"), 3),
+        new Resena(true, new Date("31-05-2023"), 4, 1,),
+        new Resena(1,true, new Date("30-05-2022"), 2),
+        new Resena(1,false, new Date("30-06-2003"), 3),
+        new Resena(1,false, new Date("07-06-2023"), 3),
         new Resena(false, new Date('02-06-2024'), 2),
         new Resena(false, new Date("08-07-2021"), 2),
         new Resena(false, new Date("19-04-2017"), 3),
