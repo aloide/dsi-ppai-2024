@@ -7,7 +7,7 @@ export class GestorDeRanking {
     private fechaHastaSeleccionada: Date = new Date()
     private tipoResenaSeleccionada: Object = {}
     private tipoVisualizacionSeleccionado: Object = {}
-    private tipoReporte: TipoReporte = TipoReporte.default
+    //private tipoReporte: TipoReporte = TipoReporte.default
     private archivoGenerado: String = "" // Aclaracion: es la ruta al archivo
     private vinos = getVinos()
     private vinosEnPeriodo = []
@@ -40,16 +40,19 @@ export class GestorDeRanking {
         let cabeceras= "ID,NOMBRE,PROMEDIO,PRECIO ARS,BODEGA,VARIETAL,REGION,PAIS\n"
         let data = ""
         for (let i = 0; i < this.vinosDeSommelier.length; i++) {
-            const vinoCompuesto: any = this.vinosDeSommelier[i];
+            const vinoConcalificacion: any = this.vinosDeSommelier[i];
             data += i + ","
-            data += vinoCompuesto.vino.getNombre() + ","
-            data += vinoCompuesto.promedio + ","
-            data += vinoCompuesto.vino.getPrecio() + ","
-            data += vinoCompuesto.vino.getBodega().getNombre() + ","
-            data += vinoCompuesto.vino.getVarietal().getNombre() + ","
-            data += vinoCompuesto.vino.getBodega().getRegion().getNombre() + ","
-            data += vinoCompuesto.vino.getBodega().getRegion().encontrarProvincia().getPais().getNombre() + "\n"
+            data += vinoConcalificacion.vino.getNombre() + ","
+            data += vinoConcalificacion.promedio + ","
+            data += vinoConcalificacion.vino.getPrecio() + ","
+            data += vinoConcalificacion.vino.getBodega().getNombre() + ","
+            data += vinoConcalificacion.vino.getVarietal().getNombre() + ","
+            data += vinoConcalificacion.vino.getBodega().getRegion().getNombre() + ","
+            data += vinoConcalificacion.vino.getBodega().getRegion().encontrarProvincia().getPais().getNombre() + "\n"
         }
+        
+
+        return cabeceras + data
 
 
 /*
@@ -85,9 +88,11 @@ class Agenda {
         this.vinos.forEach(unVino => {
 
             let elPromedio = (unVino.obtenerPromedioPuntajeEnPeriodoYTipoSommelier(this.fechaDesdeSeleccionada, this.fechaHastaSeleccionada))
-
+            
+            
             if (elPromedio > 0) {
                 this.vinosDeSommelier.push({ vino: unVino, promedio: elPromedio })
+                
             }
 
         });

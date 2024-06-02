@@ -2,7 +2,7 @@ import { Region } from "./region";
 
 export class Bodega {
 
-    private region: Region = new Region()
+    private region: Region = new Region("")
 
     private _nombre: string;
 

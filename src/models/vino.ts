@@ -9,7 +9,7 @@ export class Vino {
     private precio: number = 0
     private resenas: Resena[] = []
     private varietal : Varietal = new Varietal()
-    private bodega : Bodega = new Bodega()
+    private bodega : Bodega = new Bodega("")
 
     constructor(unNombre: string, unPrecio: number) {
         this.nombre = unNombre
@@ -33,7 +33,7 @@ export class Vino {
         return this.varietal
     }
 
-    calcularPromedio(puntaje: number, cantidad: number) {
+    private calcularPromedio(puntaje: number, cantidad: number) {
         if (cantidad == 0) return 0
 
         return puntaje / cantidad
