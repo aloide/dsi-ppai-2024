@@ -6,7 +6,7 @@ export class Resena {
     puntaje: number = 0
     idVino : number = 0
 
-    constructor(unPremium: boolean, unFechaResena: Date, unPuntaje: number, unIdVino: number) {
+    constructor( unIdVino: number, unPremium: boolean, unFechaResena: Date, unPuntaje: number) {
         this.premium = unPremium
         this.fechaResena = unFechaResena
         this.puntaje = unPuntaje
@@ -29,12 +29,14 @@ export class Resena {
 
     }
 
-    getVino() {
-
+    getIdVino(){
+        return this.idVino
     }
 
     sosDePeriodo(fechaD: Date, fechaH: Date): Boolean {
         return fechaD < this.fechaResena && this.fechaResena < fechaH
     }
+
+
 
 }
