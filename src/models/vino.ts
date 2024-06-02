@@ -1,4 +1,5 @@
-import { getResenas } from "../../data/tableResenas"
+
+import { VinosRepository } from "../repository/vinosRepository"
 import { Bodega } from "./bodega"
 import { Resena } from "./resena"
 import { Varietal } from "./varietal"
@@ -16,7 +17,7 @@ export class Vino {
         this.id = unId
         this.nombre = unNombre
         this.precio = unPrecio
-        this.resenas = getResenas()
+        this.resenas = new VinosRepository().getResenasByIdVino(this.getId())
     }
 
     getNombre(): string {
@@ -33,6 +34,10 @@ export class Vino {
 
     getVarietal(): Varietal {
         return this.varietal
+    }
+
+    getId(): number{
+        return this.id
     }
 
     private calcularPromedio(puntaje: number, cantidad: number) {
