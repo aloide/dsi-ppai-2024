@@ -20,6 +20,14 @@ router.get('/generar-ranking', (req: Request,res: Response)=>{
     var fechaH = new Date() // TODO: 
     //gestorDeRanking.tomarFechaHasta(fechaH)
 
+    var validacionFecha = gestorDeRanking.esFechaValida(fechaD, fechaH)
+
+    if(!validacionFecha){
+        res.json({
+            msg: "La fecha no es valida"
+        }).status(400)
+    }
+
     var tipoResena = {} // TODO: 
     //gestorDeRanking.tomarTipoResena(tipoResena)
 

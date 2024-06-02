@@ -1,11 +1,15 @@
 import { getResenas } from "../../data/tableResenas"
+import { Bodega } from "./bodega"
 import { Resena } from "./resena"
+import { Varietal } from "./varietal"
 
 export class Vino {
 
-    nombre: string = ""
-    precio: number = 0
-    resenas: Resena[] = []
+    private nombre: string = ""
+    private precio: number = 0
+    private resenas: Resena[] = []
+    private varietal : Varietal = new Varietal()
+    private bodega : Bodega = new Bodega()
 
     constructor(unNombre: string, unPrecio: number) {
         this.nombre = unNombre
@@ -13,12 +17,21 @@ export class Vino {
         this.resenas = getResenas()
     }
 
-    // No se usa para este diagrama de clase
-    /*
-    sosDeSomelier(unSommelier: Sommelier) {
-        this.sommelier == unSommelier
+    getNombre(): string {
+        return this.nombre
     }
-    */
+
+    getPrecio(): number {
+        return this.precio
+    }
+
+    getBodega() : Bodega{
+        return this.bodega
+    }
+
+    getVarietal(): Varietal {
+        return this.varietal
+    }
 
     calcularPromedio(puntaje: number, cantidad: number) {
         if (cantidad == 0) return 0
@@ -26,6 +39,7 @@ export class Vino {
         return puntaje / cantidad
     }
 
+    // FIXME: rename me plz
     obtenerPromedioPuntajeEnPeriodoYTipoSommelier(fechaDesde: Date, fechaHasta: Date) {
         let puntaje = 0;
         let cantidad = 0
@@ -38,14 +52,7 @@ export class Vino {
             }
         });
 
-
-        return {
-            nombre: this.nombre,
-            precio: this.precio,
-            promedio: this.calcularPromedio(puntaje, cantidad)
-
-        }
-
+        return this.calcularPromedio(puntaje, cantidad)
         
     }
 
