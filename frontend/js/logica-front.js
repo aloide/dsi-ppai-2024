@@ -45,6 +45,12 @@ function validarFechas() {
     }
 }
 
+// Función para formatear la fecha a dd-mm-yyyy
+function formatearFecha(fecha) {
+    var partes = fecha.split('-');
+    return partes[2] + '-' + partes[1] + '-' + partes[0];
+}
+
 // Abrir modal de confirmación al enviar el formulario
 form.onsubmit = function(event) {
     event.preventDefault();
@@ -65,7 +71,12 @@ continueButton.onclick = async function() {
     document.body.classList.remove('modal-open'); // Quitar la clase del body
     generandoMensaje.style.display = 'block';
     try {
-        const formData = new FormData(form);
+        var formData = new FormData(form);
+        
+        // Formatear fechas antes de enviarlas
+        formData.set('fecha-desde', formatearFecha(fechaDesdeInput.value));
+        formData.set('fecha-hasta', formatearFecha(fechaHastaInput.value));
+        
         const response = await fetch('/api/ranking', {
             method: 'POST',
             body: formData
