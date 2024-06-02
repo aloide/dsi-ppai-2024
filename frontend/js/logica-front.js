@@ -60,6 +60,38 @@ cancelButton.onclick = function() {
 
 // Botón de continuar en el modal de confirmación
 continueButton.onclick = async function() {
+    // Formatear las fechas antes de enviar el formulario
+    var fechaDesde = new Date(fechaDesdeInput.value);
+    var fechaHasta = new Date(fechaHastaInput.value);
+
+    var fechaDesdeFormateada = ('0' + fechaDesde.getDate()).slice(-2) + '/' +
+                               ('0' + (fechaDesde.getMonth() + 1)).slice(-2) + '/' +
+                               fechaDesde.getFullYear();
+
+    var fechaHastaFormateada = ('0' + fechaHasta.getDate()).slice(-2) + '/' +
+                               ('0' + (fechaHasta.getMonth() + 1)).slice(-2) + '/' +
+                               fechaHasta.getFullYear();
+
+    // Crear campos ocultos con las fechas formateadas
+    var fechaDesdeHidden = document.createElement('input');
+    fechaDesdeHidden.type = 'hidden';
+    fechaDesdeHidden.name = 'fecha-desde-formateada';
+    fechaDesdeHidden.value = fechaDesdeFormateada;
+
+    var fechaHastaHidden = document.createElement('input');
+    fechaHastaHidden.type = 'hidden';
+    fechaHastaHidden.name = 'fecha-hasta-formateada';
+    fechaHastaHidden.value = fechaHastaFormateada;
+
+    // Agregar los campos ocultos al formulario
+    form.appendChild(fechaDesdeHidden);
+    form.appendChild(fechaHastaHidden);
+
+    // Eliminar los campos de fecha originales para que no se envíen en el formato original
+    fechaDesdeInput.removeAttribute('name');
+    fechaHastaInput.removeAttribute('name');
+
+    // Enviar el formulario
     confirmModal.style.display = 'none';
     modal.style.display = 'none';
     document.body.classList.remove('modal-open'); // Quitar la clase del body
