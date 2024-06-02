@@ -8,4 +8,7 @@ router.use("/", home)
 import vinos from './vinosRoutes'
 router.use(vinos)
 
+import version from './versionRoutes'
+router.use(version)
+
 export default router
