@@ -5,8 +5,8 @@ export class GestorDeRanking {
 
     private fechaDesdeSeleccionada: Date = new Date()
     private fechaHastaSeleccionada: Date = new Date()
-    private tipoResenaSeleccionada: string = ""
-    private tipoVisualizacionSeleccionado: Object = {}
+    private tipoReporteSeleccionado: string = ""
+    private tipoVisualizacionSeleccionado: string = ""
     //private tipoReporte: TipoReporte = TipoReporte.default
     private archivoGenerado: String = "" // Aclaracion: es la ruta al archivo
     private vinos = getVinos()
@@ -17,12 +17,12 @@ export class GestorDeRanking {
 
     }
 
-    tomarTipoResena(unTipoResena: string) {
-        this.tipoResenaSeleccionada = unTipoResena
+    tomarTipoReporte(unTipoReporte: string) {
+        this.tipoReporteSeleccionado = unTipoReporte
     }
 
     tomarTipoVisualizacion(unTipoVisualizacion: string) {
-        this.tipoResenaSeleccionada = unTipoVisualizacion
+        this.tipoVisualizacionSeleccionado = unTipoVisualizacion
     }
 
     generarRanking() {
@@ -69,22 +69,20 @@ export class GestorDeRanking {
 
     buscarVinosConResenaEnPeriodo() {
 
+        if(this.tipoReporteSeleccionado == "sommelier"){
+            this.vinos.forEach(unVino => {
 
-        this.vinos.forEach(unVino => {
-
-            let elPromedio = (unVino.obtenerPromedioPuntajeEnPeriodoYTipoSommelier(this.fechaDesdeSeleccionada, this.fechaHastaSeleccionada))
-
-
-            if (elPromedio > 0) {
-                this.vinosDeSommelier.push({ vino: unVino, promedio: elPromedio })
-
-            }
-
-        });
-
-        this.vinosDeSommelier.sort((v1: any, v2: any) => v1.promedio - v2.promedio)
-
-
+                let elPromedio = (unVino.obtenerPromedioPuntajeEnPeriodoYTipoSommelier(this.fechaDesdeSeleccionada, this.fechaHastaSeleccionada))
+    
+                if (elPromedio > 0) {
+                    this.vinosDeSommelier.push({ vino: unVino, promedio: elPromedio })
+                }
+            });
+    
+            this.vinosDeSommelier.sort((v1: any, v2: any) => v1.promedio - v2.promedio)
+        }
+        
+        // Implementacion para otros tipos
     }
 
 }

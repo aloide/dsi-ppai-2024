@@ -34,7 +34,7 @@ router.post('/generar-ranking', (req: Request,res: Response)=>{
     }
 
     var tipoResena = req.body["opcion1"]
-    gestorDeRanking.tomarTipoResena(tipoResena)
+    gestorDeRanking.tomarTipoReporte(tipoResena)
 
     var tipoVisualizacion = req.body["opcion2"]
     gestorDeRanking.tomarTipoVisualizacion(tipoVisualizacion)
