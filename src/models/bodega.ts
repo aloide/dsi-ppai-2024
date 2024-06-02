@@ -1,14 +1,27 @@
-export class Bodega{
+import { Region } from "./region";
 
+export class Bodega {
 
-    getNombre(){
+    private region: Region = new Region("")
 
+    private _nombre: string;
+
+    public get nombre(): string {
+        return this._nombre;
     }
 
-    obtenerRegionYPais(){
-
+    constructor(unNombre: string) {
+        this._nombre = unNombre
     }
 
-    
+    getNombre() {
+        return this._nombre
+    }
+
+    getRegion() {
+        return this.region
+    }
+
+
 
 }
