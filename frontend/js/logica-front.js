@@ -45,6 +45,12 @@ function validarFechas() {
     }
 }
 
+// Función para formatear la fecha a dd-mm-yyyy
+function formatearFecha(fecha) {
+    var partes = fecha.split('-');
+    return partes[2] + '-' + partes[1] + '-' + partes[0];
+}
+
 // Abrir modal de confirmación al enviar el formulario
 form.onsubmit = function(event) {
     event.preventDefault();
@@ -60,44 +66,17 @@ cancelButton.onclick = function() {
 
 // Botón de continuar en el modal de confirmación
 continueButton.onclick = async function() {
-    // Formatear las fechas antes de enviar el formulario
-    var fechaDesde = new Date(fechaDesdeInput.value);
-    var fechaHasta = new Date(fechaHastaInput.value);
-
-    var fechaDesdeFormateada = ('0' + fechaDesde.getDate()).slice(-2) + '/' +
-                               ('0' + (fechaDesde.getMonth() + 1)).slice(-2) + '/' +
-                               fechaDesde.getFullYear();
-
-    var fechaHastaFormateada = ('0' + fechaHasta.getDate()).slice(-2) + '/' +
-                               ('0' + (fechaHasta.getMonth() + 1)).slice(-2) + '/' +
-                               fechaHasta.getFullYear();
-
-    // Crear campos ocultos con las fechas formateadas
-    var fechaDesdeHidden = document.createElement('input');
-    fechaDesdeHidden.type = 'hidden';
-    fechaDesdeHidden.name = 'fecha-desde-formateada';
-    fechaDesdeHidden.value = fechaDesdeFormateada;
-
-    var fechaHastaHidden = document.createElement('input');
-    fechaHastaHidden.type = 'hidden';
-    fechaHastaHidden.name = 'fecha-hasta-formateada';
-    fechaHastaHidden.value = fechaHastaFormateada;
-
-    // Agregar los campos ocultos al formulario
-    form.appendChild(fechaDesdeHidden);
-    form.appendChild(fechaHastaHidden);
-
-    // Eliminar los campos de fecha originales para que no se envíen en el formato original
-    fechaDesdeInput.removeAttribute('name');
-    fechaHastaInput.removeAttribute('name');
-
-    // Enviar el formulario
     confirmModal.style.display = 'none';
     modal.style.display = 'none';
     document.body.classList.remove('modal-open'); // Quitar la clase del body
     generandoMensaje.style.display = 'block';
     try {
-        const formData = new FormData(form);
+        var formData = new FormData(form);
+        
+        // Formatear fechas antes de enviarlas
+        formData.set('fecha-desde', formatearFecha(fechaDesdeInput.value));
+        formData.set('fecha-hasta', formatearFecha(fechaHastaInput.value));
+        
         const response = await fetch('/api/ranking', {
             method: 'POST',
             body: formData
