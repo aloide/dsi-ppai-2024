@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BonVinos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="shortcut icon" href="assets/copa.ico">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Sacramento&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <img src="assets/copa.png" alt="Logo de la bodega">
+            <h1>BonVinos</h1>
+        </div>
+        <ul>
+            <li><a class="active" href="#Ranking">Ranking</a></li>
+            <li><a href="#Reseñas">Reseñas</a></li>
+            <li><a href="#Bodegas">Bodegas</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <div class="left-image">
+            <img src="assets/vino.png" alt="Botella de vino izquierda">
+        </div>
+        <div class="center-content">
+            <div class="cont-titulo">
+                <img src="assets/mancha.png" alt="Imagen de mancha">
+                <h2>BonVinos</h2>
+            </div>
+            <div class="content-container">
+                <button id="openModal">Generar Ranking</button>
+                <table>
+                    <tbody id="top">
+                        <!-- Completaremos esta tabla usando fetch -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="right-image">
+            <img src="assets/vino.png" alt="Botella de vino derecha">
+        </div>
+    </div>
+    <div id="rankingModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Generar Ranking</h2>
+            <img src="assets/copa.png" alt="Imagen de ranking" class="modal-image">
+            <form id="rankingForm">
+                <div class="count-campos">
+                    <div class="fecha-container">
+                        <label for="fecha-desde">Fecha desde:</label>
+                        <input type="date" id="fecha-desde" name="fecha-desde" required>
+                    </div>
+                    <div class="fecha-container">
+                        <label for="fecha-hasta">Fecha hasta:</label>
+                        <input type="date" id="fecha-hasta" name="fecha-hasta" required>
+                    </div>
+                </div>
+                
+                <div id="fecha-invalida">La fecha hasta debe ser mayor o igual que la fecha desde</div>
+    
+                <div class="count-campos">
+                    <div class="fecha-container">
+                        <label for="opcion1">Tipo de reseña:</label>
+                        <select id="opcion1" name="opcion1" required>
+                            <option value="normales">Reseñas Normales</option>
+                            <option value="sommelier">Reseñas de Sommelier</option>
+                            <option value="amigos">Reseñas de Amigos</option>
+                        </select>
+                    </div>
+                    
+                    <div class="combos-container">
+                        <label for="opcion2">Formato de Archivo:</label>
+                        <select id="opcion2" name="opcion2" required>
+                            <option value="pantalla">Mostrar en Pantalla</option>
+                            <option value="pdf">Documento PDF</option>
+                            <option value="excel">Documento Excel</option>
+                        </select>
+                    </div>
+                </div>
+    
+                <button type="submit">Generar</button>
+            </form>
+            
+        </div>
+    </div>
+    <!-- Modal de confirmación -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content2 modal-content">
+            <h2>¿Está seguro que desea generar el reporte?</h2>
+            <div class="btn-container">
+                <button id="cancelButton">Cancelar</button>
+                <button id="continueButton">Continuar</button>
+            </div>
+        </div>
+    </div>
+    <div id="generandoMensaje" class="generando-mensaje">
+        Generando...
+    </div>
+    
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 BonVinos. Todos los derechos reservados.</p>
+            <ul class="social-media">
+                <li><a href="#facebook">Facebook</a></li>
+                <li><a href="#instagram">Instagram</a></li>
+                <li><a href="#twitter">Twitter</a></li>
+            </ul>
+        </div>
+    </footer>  
+
+    <script src="js/logica-front.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

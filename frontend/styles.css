@@ -1,0 +1,373 @@
+body {
+    margin: 0;
+    font-family: "Playfair Display", serif;
+    background-color: #431716;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #240803;
+    padding: 10px 20px;
+    color: #a06a65;
+}
+
+.top10{
+    color: white;
+  margin: 30px;
+}
+
+
+nav .logo {
+    display: flex;
+    align-items: center;
+}
+
+h1 {
+    font-size: 30px;
+    margin: 0 30px;
+}
+
+nav .logo img {
+    height: 70px;
+    margin-right: 15px;
+    margin-left: 100px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+nav ul li {
+    margin-left: 20px;
+}
+
+nav ul li a {
+    color: #a06a65;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 60px); /* Ajusta el 60px según la altura de tu nav */
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: -20px;
+}
+
+.container .left-image,
+.container .right-image {
+    width: 50%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    overflow: hidden;
+    z-index: -1; /* Para que no bloqueen los elementos clickeables */
+}
+
+.container .left-image img,
+.container .right-image img {
+    height: 100%;
+    object-fit: cover;
+}
+
+.container .left-image {
+    left: 0;
+}
+
+.container .left-image img {
+    position: absolute;
+    left: 0;
+    transform: translateX(-50%);
+}
+
+.container .right-image {
+    right: 0;
+}
+
+.container .right-image img {
+    position: absolute;
+    right: 0;
+    transform: translateX(50%);
+}
+
+.center-content .cont-titulo {
+    position: relative;
+    margin-top: -500px; /* Ajusta según sea necesario */
+    z-index: 1; /* Para asegurarse de que sea clickeable */
+}
+
+.center-content .cont-titulo img {
+    width: 100%;
+    max-width: 660px;
+    margin-top: -60px;
+    z-index: -1; /* Para que no bloqueen los elementos clickeables */
+}
+
+.center-content .cont-titulo h2 {
+    position: absolute;
+  
+
+  
+  
+  left: 80px;
+  
+  font-size: 115px;
+  z-index: 1;
+  margin-top: -240px;
+  text-align: center;
+}
+
+.center-content button {
+    padding: 20px 20px;
+    font-size: 30px;
+    background-color: #240803;
+    color: #a06a65;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+    border-radius: 20px;
+    z-index: 1; /* Para asegurarse de que sea clickeable */
+}
+
+.center-content button:hover {
+    background-color: #555;
+}
+
+footer {
+    background-color: #170402;
+    color: #a06a65;
+    text-align: center;
+    padding: 20px 0;
+    position: absolute;
+    width: 100%;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-content p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.active {
+    color: #804d49;
+}
+
+.footer-content .social-media {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    margin: 10px 0 0 0;
+    padding: 0;
+}
+
+.footer-content .social-media li {
+    margin: 0 10px;
+}
+
+.footer-content .social-media li a {
+    color: #804d49;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.footer-content .social-media li a:hover {
+    color: #61312f;
+}
+
+/* Agrega este bloque a tu archivo styles.css */
+.generando-mensaje {
+    display: none; /* Inicialmente oculto */
+    position: fixed;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    color: white;
+    padding: 20px;
+    border-radius: 5px;
+    z-index: 1000;
+    font-size: 18px;
+}
+
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    overflow: hidden;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #170402;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #431716;
+    width: 80%;
+    max-width: 600px;
+    position: relative;
+    text-align: center;
+
+}
+
+.modal-content2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 30%; /* Ajusta según sea necesario */
+}
+.modal-content  h2{
+    color: #a06a65;
+    font-size: 30px;
+}
+#fecha-invalida {
+    color: #c05248;
+    display: none;
+    margin-top: -30px;
+    margin-bottom: 20px;
+}
+.count-campos {
+    display: flex;
+    margin-right: 20px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-content img {
+    max-width: 50px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.fecha-container, .combos-container{
+    margin: 35px;
+    text-align: left;
+}
+
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal-content form label {
+    margin-top: 10px;
+    text-align: left;
+    width: 100%;
+    max-width: 400px;
+    color: #a06a65;
+}
+
+.modal-content form input,
+.modal-content form select,
+.modal-content form button {
+    margin-top: 10px;
+    padding: 10px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.modal-content form button {
+    background-color: #804d49;
+    border: none;
+    cursor: pointer;
+    color: #431716;
+}
+
+.modal-content form button:hover {
+    background-color: #a06a65;
+}
+
+#cancelButton{
+    padding: 10px 20px;
+    margin-right: 50px;
+    background-color: #431716;
+    color: #a06a65;
+}
+
+#continueButton{
+    padding: 10px 20px;
+    margin-left: 50px;
+    color: #431716;
+    background-color: #804d49;
+}
+
+
+.content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px; /* Espacio entre el botón y la tabla */
+}
+
+.content-container button {
+    margin-bottom: 20px; /* Espacio entre el botón y la tabla */
+    padding: 20px 40px; /* Ajusta según sea necesario */
+}
+table  {
+    width: 100%;
+    max-width: 750px;
+    border-collapse: collapse;
+    border-bottom: 2px solid #804d49;
+    margin-top: 0px;
+    position: relative;
+}
+
+table tr {
+    border-bottom: 1px solid #804d49; /* Eliminar bordes laterales, solo dejar borde inferior */
+}   
+
+table th,
+table td {
+    padding: 10px;
+    color: #fff;
+}
+
+table th {
+    background-color: #804d49;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+}
+
+
+
+
