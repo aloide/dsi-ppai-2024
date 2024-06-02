@@ -13,29 +13,31 @@ router.get('/top3', (req: Request, res: Response)=>{
 
 
 router.post('/generar-ranking', (req: Request,res: Response)=>{
-    var gestorDeRanking = new GestorDeRanking()
+    var gestorDeRanking = new GestorDeRanking()    
 
-    var fechaD = new Date() // TODO:
+    console.log(req.body);
+    
+
+    var fechaD = new Date(req.body["fecha-desde"])
     gestorDeRanking.tomarFechaDesde(fechaD)
 
-    var fechaH = new Date() // TODO: 
-    //gestorDeRanking.tomarFechaHasta(fechaH)
+    var fechaH = new Date(req.body["fecha-hasta"]) 
+    gestorDeRanking.tomarFechaHasta(fechaH)
 
     var validacionFecha = gestorDeRanking.esFechaValida(fechaD, fechaH)
 
     if(!validacionFecha){
         res.json({
-            msg: "La fecha no es valida"
+            msg: `La fecha no es valida. La fecha ${fechaH} es menor que ${fechaD}`
         }).status(400)
         return
     }
 
-    var tipoResena = {} // TODO: 
-    //gestorDeRanking.tomarTipoResena(tipoResena)
+    var tipoResena = req.body["opcion1"]
+    gestorDeRanking.tomarTipoResena(tipoResena)
 
-
-    // TODO: tipo de visualizacion 
-
+    var tipoVisualizacion = req.body["opcion2"]
+    gestorDeRanking.tomarTipoVisualizacion(tipoVisualizacion)
 
     gestorDeRanking.buscarVinosConResenaEnPeriodo()
     

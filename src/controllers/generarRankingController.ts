@@ -5,7 +5,7 @@ export class GestorDeRanking {
 
     private fechaDesdeSeleccionada: Date = new Date()
     private fechaHastaSeleccionada: Date = new Date()
-    private tipoResenaSeleccionada: Object = {}
+    private tipoResenaSeleccionada: string = ""
     private tipoVisualizacionSeleccionado: Object = {}
     //private tipoReporte: TipoReporte = TipoReporte.default
     private archivoGenerado: String = "" // Aclaracion: es la ruta al archivo
@@ -17,14 +17,24 @@ export class GestorDeRanking {
 
     }
 
+    tomarTipoResena(unTipoResena: string) {
+        this.tipoResenaSeleccionada = unTipoResena
+    }
 
+    tomarTipoVisualizacion(unTipoVisualizacion: string) {
+        this.tipoResenaSeleccionada = unTipoVisualizacion
+    }
 
     generarRanking() {
 
     }
 
-    tomarFechaDesde(this: any, fecha: Object) {
-        this.fechaDesde = fecha
+    tomarFechaDesde(unaFecha: Date) {
+        this.fechaDesdeSeleccionada = unaFecha
+    }
+
+    tomarFechaHasta(unaFecha: Date) {
+        this.fechaHastaSeleccionada = unaFecha
     }
 
     esFechaValida(fechaD: Date, fechaH: Date) {
@@ -37,7 +47,7 @@ export class GestorDeRanking {
 
 
     generarArchivo() {
-        let cabeceras= "ID,NOMBRE,PROMEDIO,PRECIO ARS,BODEGA,VARIETAL,REGION,PAIS\n"
+        let cabeceras = "ID,NOMBRE,PROMEDIO,PRECIO ARS,BODEGA,VARIETAL,REGION,PAIS\n"
         let data = ""
         for (let i = 0; i < this.vinosDeSommelier.length; i++) {
             const vinoConcalificacion: any = this.vinosDeSommelier[i];
@@ -50,55 +60,30 @@ export class GestorDeRanking {
             data += vinoConcalificacion.vino.getBodega().getRegion().getNombre() + ","
             data += vinoConcalificacion.vino.getBodega().getRegion().encontrarProvincia().getPais().getNombre() + "\n"
         }
-        
+
 
         return cabeceras + data
-
-
-/*
-class Agenda {
-    contactos: Contacto[];
-  
-    constructor() {
-      this.contactos = [];
-    }
-  
-    agregarContacto(contacto: Contacto) {
-      this.contactos.push(contacto);
-    }
-  
-    tieneContacto(contacto: Contacto): boolean {
-      return this.contactos.some(c => 
-        c.nombre === contacto.nombre &&
-        c.telefono === contacto.telefono &&
-        c.email === contacto.email
-      );
-    }
-  }
-  
-
-*/
 
 
     }
 
     buscarVinosConResenaEnPeriodo() {
-        
+
 
         this.vinos.forEach(unVino => {
 
             let elPromedio = (unVino.obtenerPromedioPuntajeEnPeriodoYTipoSommelier(this.fechaDesdeSeleccionada, this.fechaHastaSeleccionada))
-            
-            
+
+
             if (elPromedio > 0) {
                 this.vinosDeSommelier.push({ vino: unVino, promedio: elPromedio })
-                
+
             }
 
         });
 
         this.vinosDeSommelier.sort((v1: any, v2: any) => v1.promedio - v2.promedio)
-    
+
 
     }
 
