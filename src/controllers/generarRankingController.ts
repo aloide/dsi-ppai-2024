@@ -37,7 +37,7 @@ export class GestorDeRanking {
         this.fechaHastaSeleccionada = unaFecha
     }
 
-    esFechaValida(fechaD: Date, fechaH: Date) { 
+    esFechaValida(fechaD: Date, fechaH: Date) {
         return (fechaH >= fechaD) ? true : false
     }
 
@@ -51,7 +51,7 @@ export class GestorDeRanking {
         let data = ""
         for (let i = 0; i < 10; i++) {
             const vinoConcalificacion: any = this.vinosDeSommelier[i];
-            data += i + ","
+            data += i + 1 + ","
             data += vinoConcalificacion.vino.getNombre() + ","
             data += vinoConcalificacion.promedio + ","
             data += vinoConcalificacion.vino.getPrecio() + ","
@@ -61,27 +61,44 @@ export class GestorDeRanking {
             data += vinoConcalificacion.vino.getBodega().getRegion().encontrarProvincia().getPais().getNombre() + "\n"
         }
 
+        let d = new Date()
+        var datestring = d.getDate()  + "-" + (d.getMonth()+1) + "-" + d.getFullYear() + "-" +
+            d.getHours() + "-" + d.getMinutes();
 
-        return cabeceras + data
+        let fileName = datestring + ".csv"
+        let path = "./reportes/" + fileName
+
+        const fs = require("fs")
+
+        fs.writeFile(path, cabeceras + data, (err: any) => {
+            if (err) {
+                console.error('Ocurrio un error con la escritura del archivo:', err);
+            } else {
+                console.log('File written successfully');
+            }
+
+        })
+
+        return fileName
 
 
     }
 
     buscarVinosConResenaEnPeriodo() {
 
-        if(this.tipoReporteSeleccionado == "sommelier"){
+        if (this.tipoReporteSeleccionado == "sommelier") {
             this.vinos.forEach(unVino => {
 
                 let elPromedio = (unVino.obtenerPromedioPuntajeEnPeriodoYTipoSommelier(this.fechaDesdeSeleccionada, this.fechaHastaSeleccionada))
-    
+
                 if (elPromedio > 0) {
                     this.vinosDeSommelier.push({ vino: unVino, promedio: elPromedio })
                 }
             });
-    
+
             this.vinosDeSommelier.sort((v1: any, v2: any) => v2.promedio - v1.promedio)
         }
-        
+
         // Implementacion para otros tipos
     }
 

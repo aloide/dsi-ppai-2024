@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express";
 import { GestorDeRanking } from "../controllers/generarRankingController";
 import { getVinos } from "../../data/tableVinos";
+import path from "path";
 
 const router = Router()
 
@@ -15,13 +16,18 @@ router.get('/top3', (req: Request, res: Response)=>{
 router.post('/generar-ranking', (req: Request,res: Response)=>{
     var gestorDeRanking = new GestorDeRanking()    
 
-    console.log(req.body);
+    console.log(`/generar-ranking : ${ JSON.stringify(req.body)}`);
+    
     
 
-    var fechaD = new Date(req.body["fecha-desde"])
+    var fechaD = new Date(req.body["fechaDesde"])
+
+    
+    
+
     gestorDeRanking.tomarFechaDesde(fechaD)
 
-    var fechaH = new Date(req.body["fecha-hasta"]) 
+    var fechaH = new Date(req.body["fechaHasta"]) 
     gestorDeRanking.tomarFechaHasta(fechaH)
 
     var validacionFecha = gestorDeRanking.esFechaValida(fechaD, fechaH)
@@ -33,18 +39,18 @@ router.post('/generar-ranking', (req: Request,res: Response)=>{
         return
     }
 
-    var tipoResena = req.body["opcion1"]
+    var tipoResena = req.body["tipoResena"]
     gestorDeRanking.tomarTipoReporte(tipoResena)
 
-    var tipoVisualizacion = req.body["opcion2"]
+    var tipoVisualizacion = req.body["formatoArchivo"]
     gestorDeRanking.tomarTipoVisualizacion(tipoVisualizacion)
 
     gestorDeRanking.buscarVinosConResenaEnPeriodo()
     
 
-    res.send(gestorDeRanking.generarArchivo())
+    let rutaReporte = (gestorDeRanking.generarArchivo())
 
-    //res.download(archivo)
+    res.send( path.join(__dirname,"../../reportes", rutaReporte) )
 
 })
 
