@@ -81,7 +81,7 @@ continueButton.onclick = async function () {
     confirmModal.style.display = 'none';
     modal.style.display = 'none';
     document.body.classList.remove('modal-open'); // Quitar la clase del body
-    generandoMensaje.style.display = 'block';
+    
     alert('¡Reporte generado con éxito!');
     try {
         const response = await fetch('http://localhost:3000/generar-ranking', {
