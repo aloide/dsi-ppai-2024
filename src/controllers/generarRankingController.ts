@@ -55,12 +55,19 @@ export class GestorDeRanking {
         for (let i = 0; i < 10; i++) {
             const vinoConcalificacion: any = this.vinosDeSommelier[i];
     
-            if (!vinoConcalificacion || !vinoConcalificacion.vino) {
-                console.error(`El objeto vinoConcalificacion o su propiedad 'vino' está indefinido en la posición ${i}`);
-                continue;
+            for (let i = 0; i < 10; i++) {
+                const vinoConcalificacion: any = this.vinosDeSommelier[i];
+                data += i + 1 + ","
+                data += vinoConcalificacion.vino.getNombre() + ","
+                data += vinoConcalificacion.promedio + ","
+                data += vinoConcalificacion.vino.getPrecio() + ","
+                data += vinoConcalificacion.vino.getBodega().getNombre() + ","
+                data += vinoConcalificacion.vino.getVarietal().getNombre() + ","
+                data += vinoConcalificacion.vino.getBodega().getRegion().getNombre() + ","
+                data += vinoConcalificacion.vino.getBodega().getRegion().encontrarProvincia().getPais().getNombre() + "\n"
             }
 
-        })
+        }
 
         return cabeceras + data
 

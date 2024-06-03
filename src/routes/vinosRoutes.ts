@@ -46,26 +46,7 @@ router.post('/generar-ranking', (req: Request, res: Response) => {
 
     gestorDeRanking.buscarVinosConResenaEnPeriodo();
 
-    const rutaReporte = gestorDeRanking.generarArchivo();
-
-    // Devolver el archivo como respuesta HTTP
-    const filePath = path.join(__dirname, "../reportes", rutaReporte);
-    const fileStream = fs.createReadStream(filePath);
-    
-    fileStream.on('open', () => {
-        res.setHeader('Content-Type', 'text/csv');
-        fileStream.pipe(res);
-    });
-    
-    fileStream.on('error', (error) => {
-        console.error('Error al leer el archivo:', error);
-        res.status(500).send({ message: 'Error al leer el archivo' });
-    });
-});
-
     let csv = (gestorDeRanking.generarArchivo())
-
-    //res.send( path.join(__dirname,"../../reportes", rutaReporte) )
     
     res.send(csv)
 
