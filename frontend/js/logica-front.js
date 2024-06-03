@@ -95,18 +95,19 @@ continueButton.onclick = async function () {
                 formatoArchivo: document.getElementById("formatoArchivo").value
             })
         });
-        if (!response.ok) {
-            alert("Ocurrio un error: ", await response.text())
-            //throw new Error('Error al enviar los datos del formulario');
+
+        let text = await response.text()
+
+        if (!response.ok ||! text.includes(",")) {
+            alert("Ocurrio un error: No hay vinos con esa fecha ingresada")
+            //throw new Error('Error al enviar los datos del formulario');}
+            return
         }
 
         if (response.ok) {
 
-            // Después de recibir la respuesta del servidor
-            const data = await response.text(); // Obtener el contenido del archivo desde la respuesta
-
             // Crear un Blob a partir del contenido del archivo
-            const blob = new Blob([data], { type: 'text/csv' });
+            const blob = new Blob([text], { type: 'text/csv' });
 
             // Crear una URL para el Blob
             const url = window.URL.createObjectURL(blob);

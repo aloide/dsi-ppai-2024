@@ -1,9 +1,9 @@
 class TipoVisualizacion{
 
-    valores :String[] = []
+    valores :String = ""
 
     constructor(){
-        this.valores = ["a"]
+        this.valores = ""
     }
 
     getTipoVisualizacion(){

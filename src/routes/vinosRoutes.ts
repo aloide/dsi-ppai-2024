@@ -1,23 +1,8 @@
 import { Router, Request, Response } from "express";
 import { GestorDeRanking } from "../controllers/generarRankingController";
 import { getVinos } from "../../data/tableVinos";
-import path from "path";
-import fs from "fs";
 
 const router = Router()
-
-/*
-router.get('/top3', (req: Request, res: Response)=>{
-    const top3Vinos = generarPrimeros3vinos()
-    res.json(top3Vinos)
-})
-*/
-
-
-
-
-
-
 
 router.post('/generar-ranking', (req: Request, res: Response) => {
     const gestorDeRanking = new GestorDeRanking();
@@ -33,9 +18,10 @@ router.post('/generar-ranking', (req: Request, res: Response) => {
     const validacionFecha = gestorDeRanking.esFechaValida(fechaD, fechaH);
 
     if (!validacionFecha) {
-        return res.status(400).json({
+        res.status(400).json({
             msg: `La fecha no es válida. La fecha ${fechaH} es menor que ${fechaD}`
         });
+        return
     }
 
     const tipoResena = req.body.tipoResena;
@@ -49,21 +35,22 @@ router.post('/generar-ranking', (req: Request, res: Response) => {
     let csv = (gestorDeRanking.generarArchivo())
 
     // validacion de csv
-    if(csv.split("\n").length == 1){
-        res.json({
-            msg:"No hay reseñas de sommelier"
-
-        }).status(400)
+    if (csv == "") {
+        res.send(
+            "No hay reseñas de sommelier"
+        ).status(400)
 
         return
-    }
+    } else {
 
-    res.send(csv).status(200)
+        res.send(csv).status(200)
+
+    }
 
 })
 
 
-router.get("/vinos", (req: Request, res: Response)=>{
+router.get("/vinos", (req: Request, res: Response) => {
     try {
         const vinos = getVinos()
         res.json(vinos);

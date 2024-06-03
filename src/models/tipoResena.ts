@@ -1,11 +1,9 @@
-// Obsolete
-/*
 export class TipoResena{
 
-    nombre : ETipoResena
+    nombre : string
 
     constructor(){
-        this.nombre = ETipoResena.tipo1
+        this.nombre = ""
     }
 
     getNombre() : String {
@@ -14,4 +12,3 @@ export class TipoResena{
 
 
 }
-*/

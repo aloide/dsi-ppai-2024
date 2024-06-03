@@ -49,10 +49,9 @@ export class GestorDeRanking {
     generarArchivo() {
         let cabeceras = "ID,NOMBRE,PROMEDIO,PRECIO ARS,BODEGA,VARIETAL,REGION,PAIS\n";
         let data = "";
-        const fs = require("fs");
-        const path = require("path");
+        
     
-        if(this.vinosDeSommelier.length == 0) return cabeceras
+        if(this.vinosDeSommelier.length == 0) return ""
 
         for (let i = 0; i < 10; i++) {
             const vinoConcalificacion: any = this.vinosDeSommelier[i];
