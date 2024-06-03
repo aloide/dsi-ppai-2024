@@ -7,10 +7,7 @@ export class GestorDeRanking {
     private fechaHastaSeleccionada: Date = new Date()
     private tipoReporteSeleccionado: string = ""
     private tipoVisualizacionSeleccionado: string = ""
-    //private tipoReporte: TipoReporte = TipoReporte.default
-    private archivoGenerado: String = "" // Aclaracion: es la ruta al archivo
     private vinos = getVinos()
-    private vinosEnPeriodo = []
     private vinosDeSommelier: any[] = []
 
     constructor() {
@@ -25,10 +22,6 @@ export class GestorDeRanking {
         this.tipoVisualizacionSeleccionado = unTipoVisualizacion
     }
 
-    generarRanking() {
-
-    }
-
     tomarFechaDesde(unaFecha: Date) {
         this.fechaDesdeSeleccionada = unaFecha
     }
@@ -41,34 +34,37 @@ export class GestorDeRanking {
         return (fechaH >= fechaD) ? true : false
     }
 
-    tomarConfirmacion() {
-
-    }   
-
-
     generarArchivo() {
-        let cabeceras = "ID,NOMBRE,PROMEDIO,PRECIO ARS,BODEGA,VARIETAL,REGION,PAIS\n";
-        let data = "";
-        const fs = require("fs");
-        const path = require("path");
-    
-        for (let i = 0; i < 10; i++) {
-            const vinoConcalificacion: any = this.vinosDeSommelier[i];
-            data += i + 1 + ","
-            data += vinoConcalificacion.vino.getNombre() + ","
-            data += vinoConcalificacion.promedio + ","
-            data += vinoConcalificacion.vino.getPrecio() + ","
-            data += vinoConcalificacion.vino.getBodega().getNombre() + ","
-            data += vinoConcalificacion.vino.getVarietal().getNombre() + ","
-            data += vinoConcalificacion.vino.getBodega().getRegion().getNombre() + ","
-            data += vinoConcalificacion.vino.getBodega().getRegion().encontrarProvincia().getPais().getNombre() + "\n"
+
+        if (this.tipoVisualizacionSeleccionado == "excel") {
+
+            let cabeceras = "-,NOMBRE,PROMEDIO,PRECIO ARS,BODEGA,VARIETAL,REGION,PAIS\n";
+            let data = "";
+
+
+            if (this.vinosDeSommelier.length == 0) return ""
+
+            for (let i = 0; i < 10; i++) {
+                const vinoConcalificacion: any = this.vinosDeSommelier[i];
+
+                data += i + 1 + ","
+                data += vinoConcalificacion.vino.getNombre() + ","
+                data += vinoConcalificacion.promedio + ","
+                data += vinoConcalificacion.vino.getPrecio() + ","
+                data += vinoConcalificacion.vino.getBodega().getNombre() + ","
+                data += vinoConcalificacion.vino.getVarietal().getNombre() + ","
+                data += vinoConcalificacion.vino.getBodega().getRegion().getNombre() + ","
+                data += vinoConcalificacion.vino.getBodega().getRegion().encontrarProvincia().getPais().getNombre() + "\n"
+
+            }
+
+            return cabeceras + data
         }
-
-        return cabeceras + data
-
+        
+        // flujos alternativos para otros tipos de visualizacion
 
     }
-    
+
 
     buscarVinosConResenaEnPeriodo() {
 

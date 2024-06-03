@@ -81,13 +81,13 @@ continueButton.onclick = async function () {
     confirmModal.style.display = 'none';
     modal.style.display = 'none';
     document.body.classList.remove('modal-open'); // Quitar la clase del body
-    
+
     try {
         const response = await fetch('http://localhost:3000/generar-ranking', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
-            }, 
+            },
             body: JSON.stringify({
                 fechaDesde: formatearFecha(fechaDesdeInput.value),
                 fechaHasta: formatearFecha(fechaHastaInput.value),
@@ -95,31 +95,36 @@ continueButton.onclick = async function () {
                 formatoArchivo: document.getElementById("formatoArchivo").value
             })
         });
-        alert("El reporte se genero correctamente")
-        if (!response.ok) {
-            throw new Error('Error al enviar los datos del formulario');
+
+        let text = await response.text()
+
+        if (!response.ok ||! text.includes(",")) {
+            alert("Ocurrio un error: No hay vinos con esa fecha ingresada")
+            //throw new Error('Error al enviar los datos del formulario');}
+            return
         }
 
-        // Después de recibir la respuesta del servidor
-        const data = await response.text(); // Obtener el contenido del archivo desde la respuesta
+        if (response.ok) {
 
-        // Crear un Blob a partir del contenido del archivo
-        const blob = new Blob([data], { type: 'text/csv' });
+            // Crear un Blob a partir del contenido del archivo
+            const blob = new Blob([text], { type: 'text/csv' });
 
-        // Crear una URL para el Blob
-        const url = window.URL.createObjectURL(blob);
+            // Crear una URL para el Blob
+            const url = window.URL.createObjectURL(blob);
 
-        // Crear un enlace para descargar el archivo
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'ranking.csv';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);
+            // Crear un enlace para descargar el archivo
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'ranking.csv';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
 
-        // Liberar los recursos del objeto URL
-        window.URL.revokeObjectURL(url);
+            // Liberar los recursos del objeto URL
+            window.URL.revokeObjectURL(url);
+        }
+
     } catch (error) {
         console.error(error);
     }
@@ -132,7 +137,6 @@ continueButton.onclick = async function () {
         //setTimeout(cargarVinos, 1500);
     }, 3500);
     */
-    
 }
 
 // Evitar que la cruz del modal de confirmación lo cierre

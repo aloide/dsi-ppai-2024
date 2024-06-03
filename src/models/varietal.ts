@@ -1,7 +1,8 @@
 export class Varietal {
 
-    private descripcion: String = ""
-    private porcentajeComposicion = 0.0
+    // no se aplican para este caso de uso
+    // private descripcion: String = ""
+    // private porcentajeComposicion = 0.0
     private nombre: string = ""
 
     // private tipoDeUva : TipoDeUva
