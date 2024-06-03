@@ -99,7 +99,7 @@ continueButton.onclick = async function () {
         let text = await response.text()
 
         if (!response.ok ||! text.includes(",")) {
-            alert("Ocurrio un error: No hay vinos con esa fecha ingresada")
+            alert("No hay vinos con esa fecha ingresada")
             //throw new Error('Error al enviar los datos del formulario');}
             return
         }
@@ -123,6 +123,9 @@ continueButton.onclick = async function () {
 
             // Liberar los recursos del objeto URL
             window.URL.revokeObjectURL(url);
+
+            alert("Reporte generado con exito")
+
         }
 
     } catch (error) {

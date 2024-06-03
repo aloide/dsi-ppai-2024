@@ -49,7 +49,6 @@ export class Vino {
         
     }
 
-    // FIXME: rename me plz
     obtenerPromedioPuntajeEnPeriodoYTipoSommelier(fechaDesde: Date, fechaHasta: Date) {
         let puntaje = 0;
         let cantidad = 0

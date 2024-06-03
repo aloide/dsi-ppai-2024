@@ -1,5 +1,4 @@
 import { getVinos } from "../../data/tableVinos"
-import { Vino } from "../models/vino"
 
 export class GestorDeRanking {
 
