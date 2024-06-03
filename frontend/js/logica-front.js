@@ -82,7 +82,6 @@ continueButton.onclick = async function () {
     modal.style.display = 'none';
     document.body.classList.remove('modal-open'); // Quitar la clase del body
     
-    alert('¡Reporte generado con éxito!');
     try {
         const response = await fetch('http://localhost:3000/generar-ranking', {
             method: 'POST',
@@ -96,6 +95,7 @@ continueButton.onclick = async function () {
                 formatoArchivo: document.getElementById("formatoArchivo").value
             })
         });
+        alert("El reporte se genero correctamente")
         if (!response.ok) {
             throw new Error('Error al enviar los datos del formulario');
         }
@@ -132,7 +132,7 @@ continueButton.onclick = async function () {
         //setTimeout(cargarVinos, 1500);
     }, 3500);
     */
-    alert("El reporte se genero correctamente")
+    
 }
 
 // Evitar que la cruz del modal de confirmación lo cierre
