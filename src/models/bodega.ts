@@ -2,13 +2,13 @@ import { Region } from "./region";
 
 export class Bodega {
 
-    private region: Region = new Region("")
+    private region: Region = new Region("",0)
 
     private nombre: string;
 
-    constructor(unNombre: string, nombreRegion: string) {
+    constructor(unNombre: string, idRegion: number) {
         this.nombre = unNombre
-        this.region = new Region(nombreRegion)
+        this.region = new Region(unNombre,idRegion )
     }
 
     getNombre() {
