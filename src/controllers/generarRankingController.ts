@@ -43,46 +43,61 @@ export class GestorDeRanking {
 
     tomarConfirmacion() {
 
-    }
+    }   
 
 
     generarArchivo() {
-        let cabeceras = "ID,NOMBRE,PROMEDIO,PRECIO ARS,BODEGA,VARIETAL,REGION,PAIS\n"
-        let data = ""
+        let cabeceras = "ID,NOMBRE,PROMEDIO,PRECIO ARS,BODEGA,VARIETAL,REGION,PAIS\n";
+        let data = "";
+        const fs = require("fs");
+        const path = require("path");
+    
         for (let i = 0; i < 10; i++) {
             const vinoConcalificacion: any = this.vinosDeSommelier[i];
-            data += i + 1 + ","
-            data += vinoConcalificacion.vino.getNombre() + ","
-            data += vinoConcalificacion.promedio + ","
-            data += vinoConcalificacion.vino.getPrecio() + ","
-            data += vinoConcalificacion.vino.getBodega().getNombre() + ","
-            data += vinoConcalificacion.vino.getVarietal().getNombre() + ","
-            data += vinoConcalificacion.vino.getBodega().getRegion().getNombre() + ","
-            data += vinoConcalificacion.vino.getBodega().getRegion().encontrarProvincia().getPais().getNombre() + "\n"
-        }
-
-        let d = new Date()
-        var datestring = d.getDate()  + "-" + (d.getMonth()+1) + "-" + d.getFullYear() + "-" +
-            d.getHours() + "-" + d.getMinutes();
-
-        let fileName = datestring + ".csv"
-        let path = "./reportes/" + fileName
-
-        const fs = require("fs")
-
-        fs.writeFile(path, cabeceras + data, (err: any) => {
-            if (err) {
-                console.error('Ocurrio un error con la escritura del archivo:', err);
-            } else {
-                console.log('File written successfully');
+    
+            if (!vinoConcalificacion || !vinoConcalificacion.vino) {
+                console.error(`El objeto vinoConcalificacion o su propiedad 'vino' está indefinido en la posición ${i}`);
+                continue;
             }
-
-        })
-
-        return fileName
-
-
+    
+            const { vino, promedio } = vinoConcalificacion;
+            const nombre = vino.getNombre ? vino.getNombre() : 'Desconocido';
+            const precio = vino.getPrecio ? vino.getPrecio() : 'Desconocido';
+            const bodega = vino.getBodega ? vino.getBodega() : { getNombre: () => 'Desconocido', getRegion: () => ({ getNombre: () => 'Desconocido', encontrarProvincia: () => ({ getPais: () => ({ getNombre: () => 'Desconocido' }) }) }) };
+            const varietal = vino.getVarietal ? vino.getVarietal() : { getNombre: () => 'Desconocido' };
+    
+            data += `${i + 1},`;
+            data += `${nombre},`;
+            data += `${promedio},`;
+            data += `${precio},`;
+            data += `${bodega.getNombre ? bodega.getNombre() : 'Desconocido'},`;
+            data += `${varietal.getNombre ? varietal.getNombre() : 'Desconocido'},`;
+            data += `${bodega.getRegion().getNombre ? bodega.getRegion().getNombre() : 'Desconocido'},`;
+            data += `${bodega.getRegion().encontrarProvincia().getPais().getNombre ? bodega.getRegion().encontrarProvincia().getPais().getNombre() : 'Desconocido'}\n`;
+        }
+    
+        let d = new Date();
+        let datestring = `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()}-${d.getHours()}-${d.getMinutes()}`;
+        let fileName = "ranking.csv"; // Cambio del nombre del archivo
+        let directoryPath = path.join(__dirname, "../reportes");
+        let filePath = path.join(directoryPath, fileName);
+    
+        // Crear el directorio si no existe
+        if (!fs.existsSync(directoryPath)) {
+            fs.mkdirSync(directoryPath, { recursive: true });
+        }
+    
+        fs.writeFile(filePath, cabeceras + data, (err: any) => {
+            if (err) {
+                console.error('Ocurrió un error con la escritura del archivo:', err);
+            } else {
+                console.log('Archivo escrito con éxito');
+            }
+        });
+    
+        return fileName;
     }
+    
 
     buscarVinosConResenaEnPeriodo() {
 

@@ -76,53 +76,54 @@ cancelButton.onclick = function () {
 }
 
 // Botón de continuar en el modal de confirmación
+// Botón de continuar en el modal de confirmación
 continueButton.onclick = async function () {
     confirmModal.style.display = 'none';
     modal.style.display = 'none';
     document.body.classList.remove('modal-open'); // Quitar la clase del body
     generandoMensaje.style.display = 'block';
-
+    alert('¡Reporte generado con éxito!');
     try {
         const response = await fetch('http://localhost:3000/generar-ranking', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
-            }, body: JSON.stringify({
+            }, 
+            body: JSON.stringify({
                 fechaDesde: formatearFecha(fechaDesdeInput.value),
                 fechaHasta: formatearFecha(fechaHastaInput.value),
                 tipoResena: document.getElementById("tipoResena").value,
                 formatoArchivo: document.getElementById("formatoArchivo").value
-
             })
         });
         if (!response.ok) {
             throw new Error('Error al enviar los datos del formulario');
         }
 
+        // Después de recibir la respuesta del servidor
+        const data = await response.text(); // Obtener el contenido del archivo desde la respuesta
 
-        const blob = await response.blob();
+        // Crear un Blob a partir del contenido del archivo
+        const blob = new Blob([data], { type: 'text/csv' });
+
+        // Crear una URL para el Blob
         const url = window.URL.createObjectURL(blob);
+
+        // Crear un enlace para descargar el archivo
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'ranking.csv'; 
+        a.download = 'ranking.csv'; // Nombre del archivo
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-        window.URL.revokeObjectURL(url); 
 
-        //const data = await response.json();
-        console.log(data); // Muestra la respuesta del servidor
+        // Liberar los recursos del objeto URL
+        window.URL.revokeObjectURL(url);
     } catch (error) {
         console.error(error);
     }
-    // Cerrar todos los modales y esperar 3.5 segundos antes de enviar el POST
-    setTimeout(async () => {
-        // Mostrar el mensaje de "Generando..."
-        // Llamar a la función cargarVinos después de 3.5 segundos
+};
 
-        setTimeout(cargarVinos, 1500);
-    }, 3500);
-}
 
 // Evitar que la cruz del modal de confirmación lo cierre
 confirmModal.onclick = function (event) {
@@ -132,6 +133,23 @@ confirmModal.onclick = function (event) {
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 // Función para cargar los vinos
 const cargarVinos = () => {
     fetch("http://localhost:3000/vinos")
@@ -224,4 +242,5 @@ const cargarVinos = () => {
 
     console.log("Carga pendiente de vinos...");
 };
+*/
 
