@@ -10,20 +10,20 @@ var generandoMensaje = document.getElementById('generandoMensaje');
 var botonGenerar = document.getElementById('botonGenerar'); // Nuevo: Obtener el botón Generar
 
 // Abrir modal al hacer clic en el botón
-btn.onclick = function() {
+btn.onclick = function () {
     modal.style.display = 'block';
     document.body.classList.add('modal-open'); // Agregar la clase al body
 }
 
 // Cerrar modal al hacer clic en la span (x)
-span.onclick = function() {
+span.onclick = function () {
     modal.style.display = 'none';
     document.body.classList.remove('modal-open'); // Quitar la clase del body
 }
 
 // Validar fechas en tiempo real
-var fechaDesdeInput = document.getElementById('fecha-desde');
-var fechaHastaInput = document.getElementById('fecha-hasta');
+var fechaDesdeInput = document.getElementById('fechaDesde');
+var fechaHastaInput = document.getElementById('fechaHasta');
 var fechaInvalidaMsg = document.getElementById('fecha-invalida');
 
 fechaDesdeInput.addEventListener('input', validarFechas);
@@ -52,46 +52,65 @@ function validarFechas() {
     }
 }
 
-// Función para formatear la fecha a dd-mm-yyyy
+// Función para formatear la fecha a mm-dd-yyyy
 function formatearFecha(fecha) {
     var partes = fecha.split('-');
-    return partes[1] + '-' + partes[2] + '-' + partes[0];
+    console.log(partes);
+    let anio = partes[0]
+    let mes = partes[1]
+    let dia = partes[2]
+    return mes + "-" + dia + "-" + anio
 }
 
 // Abrir modal de confirmación al enviar el formulario
-form.onsubmit = function(event) {
+form.onsubmit = function (event) {
     event.preventDefault();
     confirmModal.style.display = 'block';
     document.body.classList.add('modal-open'); // Agregar la clase al body
 }
 
 // Botón de cancelar en el modal de confirmación
-cancelButton.onclick = function() {
+cancelButton.onclick = function () {
     confirmModal.style.display = 'none';
     document.body.classList.remove('modal-open'); // Quitar la clase del body
 }
 
 // Botón de continuar en el modal de confirmación
-continueButton.onclick = async function() {
+continueButton.onclick = async function () {
     confirmModal.style.display = 'none';
     modal.style.display = 'none';
     document.body.classList.remove('modal-open'); // Quitar la clase del body
     generandoMensaje.style.display = 'block';
+
     try {
-        var formData = new FormData(form);
-        
-        // Formatear fechas antes de enviarlas
-        formData.set('fecha-desde', formatearFecha(fechaDesdeInput.value));
-        formData.set('fecha-hasta', formatearFecha(fechaHastaInput.value));
-        
         const response = await fetch('http://localhost:3000/generar-ranking', {
             method: 'POST',
-            body: formData
+            headers: {
+                "Content-Type": "application/json",
+            }, body: JSON.stringify({
+                fechaDesde: formatearFecha(fechaDesdeInput.value),
+                fechaHasta: formatearFecha(fechaHastaInput.value),
+                tipoResena: document.getElementById("tipoResena").value,
+                formatoArchivo: document.getElementById("formatoArchivo").value
+
+            })
         });
         if (!response.ok) {
             throw new Error('Error al enviar los datos del formulario');
         }
-        const data = await response.json();
+
+
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'ranking.csv'; 
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url); 
+
+        //const data = await response.json();
         console.log(data); // Muestra la respuesta del servidor
     } catch (error) {
         console.error(error);
@@ -100,13 +119,13 @@ continueButton.onclick = async function() {
     setTimeout(async () => {
         // Mostrar el mensaje de "Generando..."
         // Llamar a la función cargarVinos después de 3.5 segundos
-        
+
         setTimeout(cargarVinos, 1500);
     }, 3500);
 }
 
 // Evitar que la cruz del modal de confirmación lo cierre
-confirmModal.onclick = function(event) {
+confirmModal.onclick = function (event) {
     if (event.target === confirmModal) {
         confirmModal.style.display = 'none';
         document.body.classList.remove('modal-open'); // Quitar la clase del body
@@ -121,13 +140,13 @@ const cargarVinos = () => {
             // Carga filas de la tabla con los datos de los vinos
             const listaVinos = document.getElementById("top");
             listaVinos.innerHTML = ''; // Limpiar lista existente antes de añadir nuevas entradas
-            
+
             // Agregar título "Top 10" antes de la tabla con la clase "top10"
             const titulo = document.createElement('h2');
             titulo.textContent = 'Top 10';
             titulo.classList.add('top10');
             listaVinos.parentNode.insertBefore(titulo, listaVinos);
-            
+
             for (let vino of vinos) {
                 const row = `
                     <tr>
@@ -144,7 +163,7 @@ const cargarVinos = () => {
                 listaVinos.innerHTML += row; // Agregar fila a la tabla
                 console.log(row); // Imprimir vino en consola
             }
-            
+
             // Agregar botón de descarga y estilos después de cargar los vinos
             const contentContainer = document.querySelector(".content-container");
             const buttonHTML = `<button id="descargarButton">Descargar</button>`;
