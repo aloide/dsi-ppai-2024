@@ -1,33 +1,11 @@
 ID,NOMBRE,PROMEDIO,PRECIO ARS,BODEGA,VARIETAL,REGION,PAIS
-0,Doña Paula Estate,1,29749,,Malbec,,Argentina
-1,Rutini,2.357142857142857,18534,,Malbec,,Argentina
-2,Los durmientes,2.4166666666666665,2255,,Malbec,,Argentina
-3,Santa Julia ROSE,2.5,2999,,Malbec,,Argentina
-4,Catena,2.6,51535,,Malbec,,Argentina
-5,Gran Enemigo,2.6,31990,,Malbec,,Argentina
-6,Luca,2.625,30500,,Malbec,,Argentina
-7,Vistalba,2.6363636363636362,12700,,Malbec,,Argentina
-8,Blend Bonarda Syrah,2.6666666666666665,2171,,Malbec,,Argentina
-9,Don Alfredo,2.6666666666666665,24474,,Malbec,,Argentina
-10,Alma Negra Red Blend,2.875,25000,,Malbec,,Argentina
-11,Viñas de Alvear,2.909090909090909,2699,,Malbec,,Argentina
-12,NOVECENTO,2.9285714285714284,2258,,Malbec,,Argentina
-13,Finca Norte,3,2000,,Malbec,,Argentina
-14,Viñas de Balbo,3,3230,,Malbec,,Argentina
-15,Saint Felicien,3,9039,,Malbec,,Argentina
-16,San Felipe 12 uvas,3.0833333333333335,3299,,Malbec,,Argentina
-17,Don Nicanor,3.1,10700,,Malbec,,Argentina
-18,Lindaflor,3.142857142857143,91000,,Malbec,,Argentina
-19,Toro,3.2,1099,,Malbec,,Argentina
-20,Crux,3.2142857142857144,8550,,Malbec,,Argentina
-21,AIME,3.2857142857142856,2299,,Malbec,,Argentina
-22,El Enemigo,3.2857142857142856,23032,,Malbec,,Argentina
-23,Colosso,3.2857142857142856,22250,,Malbec,,Argentina
-24,Fond De Cave,3.3333333333333335,7254,,Malbec,,Argentina
-25,Angelica,3.375,33128,,Malbec,,Argentina
-26,Luigi Bosca,3.4285714285714284,31638,,Malbec,,Argentina
-27,Huentala Cofermentado,3.5,20850,,Malbec,,Argentina
-28,Tetra Prision Break,3.5789473684210527,5000,,Malbec,,Argentina
-29,Santa Julia Malbec,3.75,3999,,Malbec,,Argentina
-30,Angelica Zapata,4,23500,,Malbec,,Argentina
-31,D. V.,4,19198,,Malbec,,Argentina
+0,Angelica Zapata,4,23500,LaBodega,Malbec,Este,Argentina
+1,D. V.,4,19198,LaBodega,Malbec,Oeste,Argentina
+2,Santa Julia Malbec,3.75,3999,LaBodega,Malbec,Norte,Argentina
+3,Tetra Prision Break,3.58,5000,LaBodega,Malbec,Norte,Argentina
+4,Huentala Cofermentado,3.5,20850,LaBodega,Malbec,Oeste,Argentina
+5,Luigi Bosca,3.43,31638,LaBodega,Malbec,Este,Argentina
+6,Angelica,3.38,33128,LaBodega,Malbec,Sur,Argentina
+7,Fond De Cave,3.33,7254,LaBodega,Malbec,Oeste,Argentina
+8,AIME,3.29,2299,LaBodega,Malbec,Sur,Argentina
+9,El Enemigo,3.29,23032,LaBodega,Malbec,Este,Argentina
