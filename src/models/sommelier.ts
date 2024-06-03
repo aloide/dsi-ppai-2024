@@ -6,14 +6,8 @@ export class Sommelier{
         this.puntaje = 0
     }
 
-    validarSommelier(){
-
-    }
-
     getPuntaje(){
 
     }
-
-
 
 }

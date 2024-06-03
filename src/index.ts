@@ -5,8 +5,6 @@ import bodyParser from 'body-parser'
 import cors from 'cors'
 
 dotenv.config()
-
-
 const app: Express = express()
 
 // config del cors
@@ -23,9 +21,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const port = process.env.PORT || 3000
 
 app.use('/', routerManager)
-
-
-
 
 app.listen(port, () => {
     console.log(`Running in http://localhost:${port}`);
