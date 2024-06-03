@@ -37,8 +37,8 @@ export class GestorDeRanking {
         this.fechaHastaSeleccionada = unaFecha
     }
 
-    esFechaValida(fechaD: Date, fechaH: Date) {
-        return (fechaH > fechaD) ? false : true
+    esFechaValida(fechaD: Date, fechaH: Date) { 
+        return (fechaH >= fechaD) ? true : false
     }
 
     tomarConfirmacion() {
@@ -49,7 +49,7 @@ export class GestorDeRanking {
     generarArchivo() {
         let cabeceras = "ID,NOMBRE,PROMEDIO,PRECIO ARS,BODEGA,VARIETAL,REGION,PAIS\n"
         let data = ""
-        for (let i = 0; i < this.vinosDeSommelier.length; i++) {
+        for (let i = 0; i < 10; i++) {
             const vinoConcalificacion: any = this.vinosDeSommelier[i];
             data += i + ","
             data += vinoConcalificacion.vino.getNombre() + ","
@@ -79,7 +79,7 @@ export class GestorDeRanking {
                 }
             });
     
-            this.vinosDeSommelier.sort((v1: any, v2: any) => v1.promedio - v2.promedio)
+            this.vinosDeSommelier.sort((v1: any, v2: any) => v2.promedio - v1.promedio)
         }
         
         // Implementacion para otros tipos

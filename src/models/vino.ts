@@ -10,14 +10,16 @@ export class Vino {
     private nombre: string = ""
     private precio: number = 0
     private resenas: Resena[] = []
-    private varietal : Varietal = new Varietal()
-    private bodega : Bodega = new Bodega("")
+    private varietal : Varietal = new Varietal("")
+    private bodega : Bodega = new Bodega("", "")
 
-    constructor(unId: number, unNombre: string, unPrecio: number) {
+    constructor(unId: number, unNombre: string, unPrecio: number, unVarietal: string, unaBodega: string, nombreRegion: string) {
         this.id = unId
         this.nombre = unNombre
         this.precio = unPrecio
         this.resenas = new VinosRepository().getResenasByIdVino(this.getId())
+        this.varietal = new Varietal(unVarietal)
+        this.bodega = new Bodega(unaBodega, nombreRegion)
     }
 
     getNombre(): string {
@@ -43,7 +45,8 @@ export class Vino {
     private calcularPromedio(puntaje: number, cantidad: number) {
         if (cantidad == 0) return 0
 
-        return puntaje / cantidad
+        return Math.round((puntaje/cantidad) * 100) / 100
+        
     }
 
     // FIXME: rename me plz
