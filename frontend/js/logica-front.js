@@ -7,6 +7,7 @@ var confirmModal = document.getElementById('confirmModal');
 var cancelButton = document.getElementById('cancelButton');
 var continueButton = document.getElementById('continueButton');
 var generandoMensaje = document.getElementById('generandoMensaje');
+var botonGenerar = document.getElementById('botonGenerar'); // Nuevo: Obtener el botón Generar
 
 // Abrir modal al hacer clic en el botón
 btn.onclick = function() {
@@ -28,6 +29,15 @@ var fechaInvalidaMsg = document.getElementById('fecha-invalida');
 fechaDesdeInput.addEventListener('input', validarFechas);
 fechaHastaInput.addEventListener('input', validarFechas);
 
+// Función para habilitar/deshabilitar el botón Generar
+function habilitarBoton(cliqueable) {
+    if (cliqueable) {
+        botonGenerar.disabled = false;
+    } else {
+        botonGenerar.disabled = true;
+    }
+}
+
 // Validar fechas en tiempo real
 function validarFechas() {
     var fechaDesde = new Date(fechaDesdeInput.value);
@@ -35,20 +45,17 @@ function validarFechas() {
 
     if (fechaDesde > fechaHasta) {
         fechaInvalidaMsg.style.display = 'block';
-        btn.onclick = null; // Deshabilitar el evento click del botón
+        habilitarBoton(false); // Deshabilitar el botón
     } else {
         fechaInvalidaMsg.style.display = 'none';
-        btn.onclick = function() {
-            modal.style.display = 'block';
-            document.body.classList.add('modal-open'); // Agregar la clase al body
-        };
+        habilitarBoton(true); // Habilitar el botón
     }
 }
 
 // Función para formatear la fecha a dd-mm-yyyy
 function formatearFecha(fecha) {
     var partes = fecha.split('-');
-    return partes[2] + '-' + partes[1] + '-' + partes[0];
+    return partes[1] + '-' + partes[2] + '-' + partes[0];
 }
 
 // Abrir modal de confirmación al enviar el formulario
@@ -77,7 +84,7 @@ continueButton.onclick = async function() {
         formData.set('fecha-desde', formatearFecha(fechaDesdeInput.value));
         formData.set('fecha-hasta', formatearFecha(fechaHastaInput.value));
         
-        const response = await fetch('/api/ranking', {
+        const response = await fetch('http://localhost:3000/generar-ranking', {
             method: 'POST',
             body: formData
         });
@@ -108,7 +115,7 @@ confirmModal.onclick = function(event) {
 
 // Función para cargar los vinos
 const cargarVinos = () => {
-    fetch("http://localhost:3000/api/vinos")
+    fetch("http://localhost:3000/vinos")
         .then((respuesta) => respuesta.json())
         .then((vinos) => {
             // Carga filas de la tabla con los datos de los vinos
@@ -187,6 +194,9 @@ const cargarVinos = () => {
             setTimeout(() => {
                 generandoMensaje.style.display = 'none';
             }, 2000); // Ajusta el tiempo según sea necesario
+
+            // Habilitar el botón Generar después de cargar los vinos
+            habilitarBoton(true);
         })
         .catch((error) => {
             console.log("Error al cargar los vinos: ", error);
@@ -195,3 +205,4 @@ const cargarVinos = () => {
 
     console.log("Carga pendiente de vinos...");
 };
+
