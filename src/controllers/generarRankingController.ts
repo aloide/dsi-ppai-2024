@@ -52,6 +52,8 @@ export class GestorDeRanking {
         const fs = require("fs");
         const path = require("path");
     
+        if(this.vinosDeSommelier.length == 0) return cabeceras
+
         for (let i = 0; i < 10; i++) {
             const vinoConcalificacion: any = this.vinosDeSommelier[i];
     

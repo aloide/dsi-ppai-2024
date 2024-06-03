@@ -47,8 +47,18 @@ router.post('/generar-ranking', (req: Request, res: Response) => {
     gestorDeRanking.buscarVinosConResenaEnPeriodo();
 
     let csv = (gestorDeRanking.generarArchivo())
-    
-    res.send(csv)
+
+    // validacion de csv
+    if(csv.split("\n").length == 1){
+        res.json({
+            msg:"No hay reseñas de sommelier"
+
+        }).status(400)
+
+        return
+    }
+
+    res.send(csv).status(200)
 
 })
 
