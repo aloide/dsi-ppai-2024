@@ -77,7 +77,7 @@ continueButton.onclick = async function() {
         formData.set('fecha-desde', formatearFecha(fechaDesdeInput.value));
         formData.set('fecha-hasta', formatearFecha(fechaHastaInput.value));
         
-        const response = await fetch('/api/ranking', {
+        const response = await fetch('http://localhost:3000/generar-ranking', {
             method: 'POST',
             body: formData
         });

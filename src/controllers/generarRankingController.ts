@@ -37,8 +37,8 @@ export class GestorDeRanking {
         this.fechaHastaSeleccionada = unaFecha
     }
 
-    esFechaValida(fechaD: Date, fechaH: Date) {
-        return (fechaH > fechaD) ? false : true
+    esFechaValida(fechaD: Date, fechaH: Date) { 
+        return (fechaH >= fechaD) ? true : false
     }
 
     tomarConfirmacion() {
