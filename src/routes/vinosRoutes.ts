@@ -48,9 +48,11 @@ router.post('/generar-ranking', (req: Request,res: Response)=>{
     gestorDeRanking.buscarVinosConResenaEnPeriodo()
     
 
-    let rutaReporte = (gestorDeRanking.generarArchivo())
+    let csv = (gestorDeRanking.generarArchivo())
 
-    res.send( path.join(__dirname,"../../reportes", rutaReporte) )
+    //res.send( path.join(__dirname,"../../reportes", rutaReporte) )
+    
+    res.send(csv)
 
 })
 

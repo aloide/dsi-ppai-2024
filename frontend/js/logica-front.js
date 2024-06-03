@@ -104,11 +104,11 @@ continueButton.onclick = async function () {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'ranking.csv'; 
+        a.download = 'ranking.csv';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-        window.URL.revokeObjectURL(url); 
+        window.URL.revokeObjectURL(url);
 
         //const data = await response.json();
         console.log(data); // Muestra la respuesta del servidor
@@ -116,12 +116,15 @@ continueButton.onclick = async function () {
         console.error(error);
     }
     // Cerrar todos los modales y esperar 3.5 segundos antes de enviar el POST
+    /*
     setTimeout(async () => {
         // Mostrar el mensaje de "Generando..."
         // Llamar a la función cargarVinos después de 3.5 segundos
-
-        setTimeout(cargarVinos, 1500);
+        alert("EL reporte")
+        //setTimeout(cargarVinos, 1500);
     }, 3500);
+    */
+    alert("El reporte se genero correctamente")
 }
 
 // Evitar que la cruz del modal de confirmación lo cierre
