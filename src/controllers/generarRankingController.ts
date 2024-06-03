@@ -1,4 +1,5 @@
-import { getVinos } from "../../data/tableVinos"
+import { getVinos } from "../../data/tableVinos";
+import { PDFDocument, PDFPage, rgb } from "pdf-lib";
 
 export class GestorDeRanking {
 
@@ -59,8 +60,42 @@ export class GestorDeRanking {
 
             return cabeceras + data
         }
+
+
+        if (this.tipoVisualizacionSeleccionado == "pdf") {
+
+            let cabeceras = "-,NOMBRE,PROMEDIO,PRECIO ARS,BODEGA,VARIETAL,REGION,PAIS\n";
+            let data = "";
+
+
+            if (this.vinosDeSommelier.length == 0) return ""
+
+            for (let i = 0; i < 10; i++) {
+                const vinoConcalificacion: any = this.vinosDeSommelier[i];
+
+                data += i + 1 + ","
+                data += vinoConcalificacion.vino.getNombre() + ","
+                data += vinoConcalificacion.promedio + ","
+                data += vinoConcalificacion.vino.getPrecio() + ","
+                data += vinoConcalificacion.vino.getBodega().getNombre() + ","
+                data += vinoConcalificacion.vino.getVarietal().getNombre() + ","
+                data += vinoConcalificacion.vino.getBodega().getRegion().getNombre() + ","
+                data += vinoConcalificacion.vino.getBodega().getRegion().encontrarProvincia().getPais().getNombre() + "\n"
+
+            }
+            const elString: string = cabeceras + data
+            const buffer:Buffer = Buffer.from(elString)
+            const elStringEnBase64: string = buffer.toString('base64')
+            return elStringEnBase64
+        }
+// flujos alternativos para otros tipos de visualizacion
+
         
-        // flujos alternativos para otros tipos de visualizacion
+        
+        
+        
+        
+        
 
     }
 

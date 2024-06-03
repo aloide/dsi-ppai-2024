@@ -98,32 +98,55 @@ continueButton.onclick = async function () {
 
         let text = await response.text()
 
-        if (!response.ok ||! text.includes(",")) {
+        if (!response.ok) {
             alert("No hay vinos con esa fecha ingresada")
             //throw new Error('Error al enviar los datos del formulario');}
             return
         }
 
+
+        // Esto basicamente es para descargar el CSV, SOLO PARA DESCARGAR
         if (response.ok) {
+            if (formatoArchivo.value == 'excel') {
+                
+                alert('Entro al excel')
+                // Crear un Blob a partir del contenido del archivo
+                const blob = new Blob([text], { type: 'text/csv' });
 
-            // Crear un Blob a partir del contenido del archivo
-            const blob = new Blob([text], { type: 'text/csv' });
+                // Crear una URL para el Blob
+                const url = window.URL.createObjectURL(blob);
 
-            // Crear una URL para el Blob
-            const url = window.URL.createObjectURL(blob);
+                // Crear un enlace para descargar el archivo
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'ranking.csv';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
 
-            // Crear un enlace para descargar el archivo
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'ranking.csv';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
+                // Liberar los recursos del objeto URL
+                window.URL.revokeObjectURL(url);
+            }
+            
+            if (formatoArchivo.value == 'pdf') {
+                let textoDecodeado = atob(text)
+                const textBlob = new Blob([textoDecodeado], { type: 'text/plain' });
+                // Crear una URL para el Blob
+                const url = window.URL.createObjectURL(textBlob);
+                // Crear un enlace para descargar el archivo
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'ranking.txt';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
 
-            // Liberar los recursos del objeto URL
-            window.URL.revokeObjectURL(url);
-
+                // Liberar los recursos del objeto URL
+                window.URL.revokeObjectURL(url);
+            }
+            
             alert("Reporte generado con exito")
 
         }
@@ -131,15 +154,7 @@ continueButton.onclick = async function () {
     } catch (error) {
         console.error(error);
     }
-    // Cerrar todos los modales y esperar 3.5 segundos antes de enviar el POST
-    /*
-    setTimeout(async () => {
-        // Mostrar el mensaje de "Generando..."
-        // Llamar a la función cargarVinos después de 3.5 segundos
-        alert("EL reporte")
-        //setTimeout(cargarVinos, 1500);
-    }, 3500);
-    */
+
 }
 
 // Evitar que la cruz del modal de confirmación lo cierre

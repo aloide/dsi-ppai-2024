@@ -49,6 +49,7 @@ export class Vino {
         
     }
 
+
     obtenerPromedioPuntajeEnPeriodoYTipoSommelier(fechaDesde: Date, fechaHasta: Date) {
         let puntaje = 0;
         let cantidad = 0

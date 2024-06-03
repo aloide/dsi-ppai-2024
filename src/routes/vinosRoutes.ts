@@ -59,16 +59,6 @@ router.get("/vinos", (req: Request, res: Response) => {
     }
 })
 
-/*
-private getVinos = async (req: Request, res: Response): Promise<void> => {
-        try {
-            const vinos = await Vino.findAll();
-            res.json(vinos);
-        } catch (error) {
-            res.status(500).send({ message: "Error al obtener los vinos" });
-        }
-    }
-*/
 
 
 export default router
