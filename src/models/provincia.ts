@@ -1,13 +1,15 @@
 import { Pais } from "./pais"
+import { getPaisById } from "../repository/paisRepository"
 
 export class Provincia {
     private id : number = 0
     private nombre: string = ""
-    private pais : Pais = new Pais()
+    private pais : Pais = new Pais('', 0)
 
-    constructor( unId: number, unNombre: string) {
+    constructor( unId: number, unNombre: string, idPais:number) {
         this.nombre = unNombre
         this.id = unId
+        this.pais = getPaisById(idPais)
     }
 
     getNombre(): string {
