@@ -44,7 +44,8 @@ export class Vino {
     private calcularPromedio(puntaje: number, cantidad: number) {
         if (cantidad == 0) return 0
 
-        return puntaje / cantidad
+        return Math.round((puntaje/cantidad) * 100) / 100
+        
     }
 
     // FIXME: rename me plz
