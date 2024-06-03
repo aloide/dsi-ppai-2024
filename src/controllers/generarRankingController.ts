@@ -79,7 +79,7 @@ export class GestorDeRanking {
 
         })
 
-        return fileName
+        return cabeceras + data
 
 
     }
