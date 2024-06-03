@@ -11,7 +11,7 @@ export class Vino {
     private precio: number = 0
     private resenas: Resena[] = []
     private varietal : Varietal = new Varietal("")
-    private bodega : Bodega = new Bodega("", "")
+    private bodega : Bodega = new Bodega("", 0)
 
     constructor(unId: number, unNombre: string, unPrecio: number, unVarietal: string, unaBodega: string, nombreRegion: string) {
         this.id = unId
