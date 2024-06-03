@@ -2,6 +2,7 @@ import { Router, Request, Response } from "express";
 import { GestorDeRanking } from "../controllers/generarRankingController";
 import { getVinos } from "../../data/tableVinos";
 import path from "path";
+import fs from "fs";
 
 const router = Router()
 
@@ -13,40 +14,54 @@ router.get('/top3', (req: Request, res: Response)=>{
 */
 
 
-router.post('/generar-ranking', (req: Request,res: Response)=>{
-    var gestorDeRanking = new GestorDeRanking()    
 
-    console.log(`/generar-ranking : ${ JSON.stringify(req.body)}`);
-    
-    
 
-    var fechaD = new Date(req.body["fechaDesde"])
 
-    
-    
 
-    gestorDeRanking.tomarFechaDesde(fechaD)
 
-    var fechaH = new Date(req.body["fechaHasta"]) 
-    gestorDeRanking.tomarFechaHasta(fechaH)
+router.post('/generar-ranking', (req: Request, res: Response) => {
+    const gestorDeRanking = new GestorDeRanking();
 
-    var validacionFecha = gestorDeRanking.esFechaValida(fechaD, fechaH)
+    console.log(`/generar-ranking : ${JSON.stringify(req.body)}`);
 
-    if(!validacionFecha){
-        res.json({
-            msg: `La fecha no es valida. La fecha ${fechaH} es menor que ${fechaD}`
-        }).status(400)
-        return
+    const fechaD = new Date(req.body.fechaDesde);
+    const fechaH = new Date(req.body.fechaHasta);
+
+    gestorDeRanking.tomarFechaDesde(fechaD);
+    gestorDeRanking.tomarFechaHasta(fechaH);
+
+    const validacionFecha = gestorDeRanking.esFechaValida(fechaD, fechaH);
+
+    if (!validacionFecha) {
+        return res.status(400).json({
+            msg: `La fecha no es válida. La fecha ${fechaH} es menor que ${fechaD}`
+        });
     }
 
-    var tipoResena = req.body["tipoResena"]
-    gestorDeRanking.tomarTipoReporte(tipoResena)
+    const tipoResena = req.body.tipoResena;
+    gestorDeRanking.tomarTipoReporte(tipoResena);
 
-    var tipoVisualizacion = req.body["formatoArchivo"]
-    gestorDeRanking.tomarTipoVisualizacion(tipoVisualizacion)
+    const tipoVisualizacion = req.body.formatoArchivo;
+    gestorDeRanking.tomarTipoVisualizacion(tipoVisualizacion);
 
-    gestorDeRanking.buscarVinosConResenaEnPeriodo()
+    gestorDeRanking.buscarVinosConResenaEnPeriodo();
+
+    const rutaReporte = gestorDeRanking.generarArchivo();
+
+    // Devolver el archivo como respuesta HTTP
+    const filePath = path.join(__dirname, "../reportes", rutaReporte);
+    const fileStream = fs.createReadStream(filePath);
     
+    fileStream.on('open', () => {
+        res.setHeader('Content-Type', 'text/csv');
+        fileStream.pipe(res);
+    });
+    
+    fileStream.on('error', (error) => {
+        console.error('Error al leer el archivo:', error);
+        res.status(500).send({ message: 'Error al leer el archivo' });
+    });
+});
 
     let csv = (gestorDeRanking.generarArchivo())
 
