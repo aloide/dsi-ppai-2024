@@ -4,18 +4,15 @@ export class Bodega {
 
     private region: Region = new Region("")
 
-    private _nombre: string;
+    private nombre: string;
 
-    public get nombre(): string {
-        return this._nombre;
-    }
-
-    constructor(unNombre: string) {
-        this._nombre = unNombre
+    constructor(unNombre: string, nombreRegion: string) {
+        this.nombre = unNombre
+        this.region = new Region(nombreRegion)
     }
 
     getNombre() {
-        return this._nombre
+        return this.nombre
     }
 
     getRegion() {

@@ -16,4 +16,8 @@ export class Region {
         return filter[0]
     }
 
+    getNombre(){
+        return this.nombre
+    }
+
 }
