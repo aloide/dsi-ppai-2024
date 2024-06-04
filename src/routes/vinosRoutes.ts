@@ -1,8 +1,20 @@
 import { Router, Request, Response } from "express";
 import { GestorDeRanking } from "../controllers/generarRankingController";
 import { getVinos } from "../../data/tableVinos";
+import { GestorTipos } from "../controllers/tiposController";
 
 const router = Router()
+
+router.get("/vinos", (req: Request, res: Response) => {
+
+    const gestorTipos = new GestorTipos()
+
+    let tipoResenas = gestorTipos.getTiposResenas()
+    let tipoArchivo = gestorTipos.getFormatosArchivos()
+
+    res.json({ tipoResenas: tipoResenas, tipoArchivo: tipoArchivo }).status(200)
+
+})
 
 router.post('/generar-ranking', (req: Request, res: Response) => {
     const gestorDeRanking = new GestorDeRanking();

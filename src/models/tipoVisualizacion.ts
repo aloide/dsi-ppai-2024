@@ -1,4 +1,4 @@
-class TipoVisualizacion{
+export class TipoVisualizacion{
 
     valores :String = ""
 
