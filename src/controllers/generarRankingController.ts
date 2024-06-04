@@ -1,5 +1,25 @@
 import { getVinos } from "../../data/tableVinos";
-import { PDFDocument, PDFPage, rgb } from "pdf-lib";
+
+import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
+
+async function txtAPDF (textoPlano: string) {
+    const documentoPDF = await PDFDocument.create()
+    const fuenteDeLetra = await documentoPDF.embedFont(StandardFonts.TimesRoman)
+    const pagina = documentoPDF.addPage()
+    const {width, height} = pagina.getSize()
+    const tamanoFuente = 12
+    pagina.drawText(textoPlano, {
+        x: 50,
+        y: height - 4 * tamanoFuente,
+        size: tamanoFuente,
+        font: fuenteDeLetra,
+        color: rgb(0,0,0),
+
+    })
+const pdfBytes = await documentoPDF.save()
+
+return pdfBytes
+}
 
 export class GestorDeRanking {
 
@@ -34,7 +54,7 @@ export class GestorDeRanking {
         return (fechaH >= fechaD) ? true : false
     }
 
-    generarArchivo() {
+    async generarArchivo(){
 
         if (this.tipoVisualizacionSeleccionado == "excel") {
 
@@ -84,9 +104,15 @@ export class GestorDeRanking {
 
             }
             const elString: string = cabeceras + data
-            const buffer:Buffer = Buffer.from(elString)
-            const elStringEnBase64: string = buffer.toString('base64')
-            return elStringEnBase64
+            let elStringEnBase64: string = '';
+            const elPDF = await txtAPDF(elString)
+            //const buffer:Buffer = Buffer.from(elPDF)
+            //elStringEnBase64 = buffer.toString('base64')
+            
+            
+            //return elStringEnBase64
+            return atob(elPDF.toString())
+            
         }
 // flujos alternativos para otros tipos de visualizacion
 

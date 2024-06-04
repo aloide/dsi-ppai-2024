@@ -1,23 +1,8 @@
-import * as pdf from "pdf-lib"
+//import * as pdf from "pdf-lib"
 
-async function txtAPDF (textoPlano) {
-    const documentoPDF = await pdf.PDFDocument.create()
-    const fuenteDeLetra = await documentoPDF.embedFont(pdf.StandardFonts.TimesRoman)
-    const pagina = documentoPDF.addPage()
-    const {width, heigth} = pagina.getSize()
-    const tamanoFuente = 15
-    pagina.drawText(textoPlano, {
-        x: 50,
-        y: heigth - 4 * tamanoFuente,
-        size: tamanoFuente,
-        font: fuenteDeLetra,
-        color: pdf.rgb(0,0,0),
 
-    })
-const pdfBytes = await documentoPDF.save()
 
-return pdfBytes
-}
+
 // Obtener elementos del DOM
 var modal = document.getElementById('rankingModal');
 var btn = document.getElementById('openModal');
@@ -151,15 +136,17 @@ continueButton.onclick = async function () {
             
             if (formatoArchivo.value == 'pdf') {
 
+                console.log(text)
                 let textoDecodeado = atob(text)
-                let elPDF = txtAPDF(textoDecodeado)
-                const textBlob = new Blob([elPDF], { type: 'text/plain' });
+                
+                const textBlob = new Blob([text], { type: 'text/plain' });
                 // Crear una URL para el Blob
                 const url = window.URL.createObjectURL(textBlob);
                 // Crear un enlace para descargar el archivo
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = 'ranking.txt';
+
+                a.download = 'ranking.pdf';
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);

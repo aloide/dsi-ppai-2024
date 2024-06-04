@@ -4,7 +4,7 @@ import { getVinos } from "../../data/tableVinos";
 
 const router = Router()
 
-router.post('/generar-ranking', (req: Request, res: Response) => {
+router.post('/generar-ranking', async (req: Request, res: Response) => {
     const gestorDeRanking = new GestorDeRanking();
 
     console.log(`/generar-ranking : ${JSON.stringify(req.body)}`);
@@ -32,7 +32,7 @@ router.post('/generar-ranking', (req: Request, res: Response) => {
 
     gestorDeRanking.buscarVinosConResenaEnPeriodo();
 
-    let csv = (gestorDeRanking.generarArchivo())
+    let csv = (await gestorDeRanking.generarArchivo())
 
     // validacion de csv
     if (csv == "") {
