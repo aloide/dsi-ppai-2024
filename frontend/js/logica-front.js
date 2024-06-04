@@ -113,7 +113,7 @@ continueButton.onclick = async function () {
         // Esto basicamente es para descargar el CSV, SOLO PARA DESCARGAR
         if (response.ok) {
             if (formatoArchivo.value == 'excel') {
-                
+
                 alert('Entro al excel')
                 // Crear un Blob a partir del contenido del archivo
                 const blob = new Blob([text], { type: 'text/csv' });
@@ -133,13 +133,14 @@ continueButton.onclick = async function () {
                 // Liberar los recursos del objeto URL
                 window.URL.revokeObjectURL(url);
             }
-            
+
             if (formatoArchivo.value == 'pdf') {
 
                 console.log(text)
-                let textoDecodeado = atob(text)
+                /*
+                let textoDecodeado = btoa(text)
                 
-                const textBlob = new Blob([text], { type: 'text/plain' });
+                const textBlob = new Blob([textoDecodeado], { type: 'application/pdf' });
                 // Crear una URL para el Blob
                 const url = window.URL.createObjectURL(textBlob);
                 // Crear un enlace para descargar el archivo
@@ -153,8 +154,33 @@ continueButton.onclick = async function () {
 
                 // Liberar los recursos del objeto URL
                 window.URL.revokeObjectURL(url);
+                */
+                console.log(text);
+                const pdfData = atob(text);
+                const arrayBuffer = new ArrayBuffer(pdfData.length);
+                const uint8Array = new Uint8Array(arrayBuffer);
+                for (let i = 0; i < pdfData.length; i++) {
+                    uint8Array[i] = pdfData.charCodeAt(i);
+                }
+
+                // Crear un Blob a partir del array buffer
+                const pdfBlob = new Blob([uint8Array], { type: 'application/pdf' });
+
+                // Crear una URL para el Blob
+                const url = URL.createObjectURL(pdfBlob);
+
+                // Crear un enlace para descargar el archivo
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'ranking.pdf';
+
+                // Simular un clic en el enlace para iniciar la descarga
+                a.click();
+
+                // Liberar los recursos del objeto URL
+                URL.revokeObjectURL(url);
             }
-            
+
             alert("Reporte generado con exito")
 
         }

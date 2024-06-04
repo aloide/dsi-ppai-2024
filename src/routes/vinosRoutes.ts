@@ -32,10 +32,10 @@ router.post('/generar-ranking', async (req: Request, res: Response) => {
 
     gestorDeRanking.buscarVinosConResenaEnPeriodo();
 
-    let csv = (await gestorDeRanking.generarArchivo())
+    let dataArchivo = (await gestorDeRanking.generarArchivo()) || ""
 
     // validacion de csv
-    if (csv == "") {
+    if (dataArchivo == "") {
         res.send(
             "No hay reseñas de sommelier"
         ).status(400)
@@ -43,7 +43,7 @@ router.post('/generar-ranking', async (req: Request, res: Response) => {
         return
     } else {
 
-        res.send(csv).status(200)
+        res.send(new Buffer(dataArchivo)).status(200)
 
     }
 
