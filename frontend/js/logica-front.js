@@ -136,25 +136,6 @@ continueButton.onclick = async function () {
 
             if (formatoArchivo.value == 'pdf') {
 
-                console.log(text)
-                /*
-                let textoDecodeado = btoa(text)
-                
-                const textBlob = new Blob([textoDecodeado], { type: 'application/pdf' });
-                // Crear una URL para el Blob
-                const url = window.URL.createObjectURL(textBlob);
-                // Crear un enlace para descargar el archivo
-                const a = document.createElement('a');
-                a.href = url;
-
-                a.download = 'ranking.pdf';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-
-                // Liberar los recursos del objeto URL
-                window.URL.revokeObjectURL(url);
-                */
                 console.log(text);
                 
                 //const pdfData = atob(text);

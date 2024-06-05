@@ -91,10 +91,6 @@ export class GestorDeRanking {
 
         if (this.tipoVisualizacionSeleccionado == "pdf") {
 
-            let cabeceras = "-,NOMBRE,PROMEDIO,PRECIO ARS,BODEGA,VARIETAL,REGION,PAIS\n";
-            let data = "";
-
-
             if (this.vinosDeSommelier.length == 0) return ""
 
             const tableAscii = new Table("Nombre", "Promedio", "Precio", "Bodega", "Varietal", "Region", "Pais")
@@ -103,7 +99,6 @@ export class GestorDeRanking {
             for (let i = 0; i < 10; i++) {
                 const vinoConcalificacion: any = this.vinosDeSommelier[i];
 
-                let id = i + 1 + ","
                 let nombreVino = vinoConcalificacion.vino.getNombre()
                 let promedio = vinoConcalificacion.promedio
                 let precioVino = vinoConcalificacion.vino.getPrecio()
@@ -115,7 +110,6 @@ export class GestorDeRanking {
                 tableAscii.addRow(nombreVino, promedio, precioVino, nombreBodega, nombreVarietal, nombreRegion, nombrePais)
 
             }
-            // const elStringCSV: string = cabeceras + data
 
             const doc = new jsPDF()
             doc.setFontSize(12)
@@ -127,21 +121,10 @@ export class GestorDeRanking {
 
             return doc.output("datauristring")
 
-            // let elStringEnBase64: string = '';
-            // const elPDF = await txtAPDF(elString)
-
-            // return elStringEnBase64
-            // return atob(elPDF.toString())
-
         }
+
+
         // flujos alternativos para otros tipos de visualizacion
-
-
-
-
-
-
-
 
     }
 
