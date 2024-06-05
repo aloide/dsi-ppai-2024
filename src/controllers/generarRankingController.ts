@@ -1,32 +1,6 @@
-import { PDFDocument } from "pdf-lib";
 import { getVinos } from "../../data/tableVinos";
 import jsPDF from "jspdf";
 import Table from "nd-table";
-
-
-//import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
-// obsolete
-/*
-async function txtAPDF (textoPlano: string) {
-    const documentoPDF = await PDFDocument.create()
-    const fuenteDeLetra = await documentoPDF.embedFont(StandardFonts.TimesRoman)
-    const pagina = documentoPDF.addPage()
-    const {width, height} = pagina.getSize()
-    const tamanoFuente = 12
-    pagina.drawText(textoPlano, {
-        x: 50,
-        y: height - 4 * tamanoFuente,
-        size: tamanoFuente,
-        font: fuenteDeLetra,
-        color: rgb(0,0,0),
-
-    })
-const pdfBytes = await documentoPDF.save()
-
-return pdfBytes
-}
-
-*/
 
 export class GestorDeRanking {
 
