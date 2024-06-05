@@ -156,22 +156,24 @@ continueButton.onclick = async function () {
                 window.URL.revokeObjectURL(url);
                 */
                 console.log(text);
-                const pdfData = atob(text);
-                const arrayBuffer = new ArrayBuffer(pdfData.length);
+                
+                //const pdfData = atob(text);
+                const arrayBuffer = new ArrayBuffer(text.length);
                 const uint8Array = new Uint8Array(arrayBuffer);
-                for (let i = 0; i < pdfData.length; i++) {
-                    uint8Array[i] = pdfData.charCodeAt(i);
+                for (let i = 0; i < text.length; i++) {
+                    uint8Array[i] = text.charCodeAt(i);
                 }
 
                 // Crear un Blob a partir del array buffer
                 const pdfBlob = new Blob([uint8Array], { type: 'application/pdf' });
-
+                
                 // Crear una URL para el Blob
                 const url = URL.createObjectURL(pdfBlob);
+                
 
                 // Crear un enlace para descargar el archivo
                 const a = document.createElement('a');
-                a.href = url;
+                a.href = text; // This
                 a.download = 'ranking.pdf';
 
                 // Simular un clic en el enlace para iniciar la descarga

@@ -1,6 +1,7 @@
 import { PDFDocument } from "pdf-lib";
 import { getVinos } from "../../data/tableVinos";
 import jsPDF from "jspdf";
+import Table from "nd-table";
 
 
 //import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
@@ -96,24 +97,33 @@ export class GestorDeRanking {
 
             if (this.vinosDeSommelier.length == 0) return ""
 
+            const tableAscii = new Table("Nombre", "Promedio", "Precio", "Bodega", "Varietal", "Region", "Pais")
+
+
             for (let i = 0; i < 10; i++) {
                 const vinoConcalificacion: any = this.vinosDeSommelier[i];
 
-                data += i + 1 + ","
-                data += vinoConcalificacion.vino.getNombre() + ","
-                data += vinoConcalificacion.promedio + ","
-                data += vinoConcalificacion.vino.getPrecio() + ","
-                data += vinoConcalificacion.vino.getBodega().getNombre() + ","
-                data += vinoConcalificacion.vino.getVarietal().getNombre() + ","
-                data += vinoConcalificacion.vino.getBodega().getRegion().getNombre() + ","
-                data += vinoConcalificacion.vino.getBodega().getRegion().encontrarProvincia().getPais().getNombre() + "\n"
+                let id = i + 1 + ","
+                let nombreVino = vinoConcalificacion.vino.getNombre()
+                let promedio = vinoConcalificacion.promedio
+                let precioVino = vinoConcalificacion.vino.getPrecio()
+                let nombreBodega = vinoConcalificacion.vino.getBodega().getNombre()
+                let nombreVarietal = vinoConcalificacion.vino.getVarietal().getNombre()
+                let nombreRegion = vinoConcalificacion.vino.getBodega().getRegion().getNombre()
+                let nombrePais = vinoConcalificacion.vino.getBodega().getRegion().encontrarProvincia().getPais().getNombre()
+
+                tableAscii.addRow(nombreVino, promedio, precioVino, nombreBodega, nombreVarietal, nombreRegion, nombrePais)
 
             }
-            const elStringCSV: string = cabeceras + data
+            // const elStringCSV: string = cabeceras + data
 
             const doc = new jsPDF()
-
-            doc.text(elStringCSV, 10, 10)
+            doc.setFontSize(12)
+            doc.text("BonVinos - 2024", 10, 10)
+            doc.text(tableAscii.toCSV(), 10, 20)
+            doc.text(new Date().toLocaleDateString(), 10, 270)
+            doc.text("Grupo 5 - COWABUNGA - UTN FRC - Catedra de Diseño de Sistemas de Software", 10, 280)
+            //doc.addImage("..\\..\\assets\\img\\copa.png","png",10,10,10,30)
 
             return doc.output("datauristring")
 
